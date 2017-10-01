@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <title>palindrome challange</title>
+    </head>
+    <body>
+        <input id="text"type="text" placeholder="test your word">
+        <button id="dispatchTestBtn"> Test</button>
+        <hr>
+        <h1 id="preview"></h1>
+        <script>
+            function checkPalindrome(inputString) {
+                if(inputString.length === 1) return true;
+                numtype = inputString.length%2;
+                length = numtype==0?inputString.length/2:(inputString.length-1)/2
+                addMe =  numtype==0?0:1
+                half_1 = inputString.split("").slice(0,length)
+                half_2 = inputString.split("").slice(length+addMe).reverse()
+                console.log(
+                    numtype,
+                    length,
+                    addMe,
+                    half_1,
+                    half_2
+                )
+                return half_1.join() == half_2.join()
+            }
+            
+            let input = document.querySelector('#text');
+            let btn = document.querySelector('#dispatchTestBtn');
+            let preview = document.querySelector('#preview');
+            btn.addEventListener('click', function(e){
+                console.log(e.target)
+                preview.innerHTML  =  checkPalindrome(input.value)? `your text is plaindrome ;)`:`your text does not fit the palindrome ;(`
+
+            })
+
+        
+        </script>
+    </body>
+</html>
