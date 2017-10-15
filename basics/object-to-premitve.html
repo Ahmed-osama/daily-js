@@ -27,11 +27,17 @@
                 },
                 valueOf(){
                     return  this.age
-                }
+                },
+                // [Symbol.toPrimitive](hint) {
+                //     return hint == "string" ? `{name: "${this.name}"}` : this.money;
+                // }
+
              }
              _("hi : " + ahmed.toString())
-             _(3 + ahmed)
-
+             _(3 + ahmed.valueOf())
+             _(1 + ahmed)
+             _("hi : " + ahmed)
+             
             /*
                 1 - all objects has a truthy value so no need for a boolean convertion
                 2 - ToPremitve
