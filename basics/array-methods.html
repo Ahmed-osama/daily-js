@@ -1,0 +1,53 @@
+
+<html>
+    <head>
+        <title>Numbers</title>
+        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+        <meta charset="UTF-8">
+        
+    </head>
+    <body>
+
+        <script>
+            "use strict";  
+            function _(msg){
+                console.log(msg)
+            }
+
+           let arr = ['native1', 'native2', 'native3'];
+
+           _(arr)
+           arr.push('pushed1') // adds items to the end
+           _('pushed "pushed1" to arr :  [' + arr+']')
+           arr.pop() // extracts an item from the end
+           _('pop from arr end :  [' +arr+']')
+           arr.shift() // extracts an item from the beginning
+           _('shift from the begning : [' +arr+']')
+           arr.unshift('unshifted item') // extracts an item from the beginning
+           _('unshift ads tem to first : [' +arr+'] and length is '+arr.length)
+           
+           delete arr[2]; // delete removes value and keep holes in arr
+           _('deleted 2nd item : [' +arr+ '] and length still '+arr.length)
+           arr.splice(2,1)
+           _('deleted 3rd item using splice : [' +arr+ '] and length now is '+arr.length)
+           
+           arr.splice(1,0, 'inject by splice')
+           _('injected  2d item using splice : [' +arr+ '] and length now is '+arr.length)
+           
+           
+           arr.splice(1,0, 'inject by splice')
+           _('injected  2d item using splice : [' +arr+ '] and length now is '+arr.length)
+           
+           let arr2 = ['arr2Item1', 'arr2Item2']
+           arr.concat(arr2)
+           _('concate arr & arr2 : ' + arr )
+
+           _('indexOf "native2" is  '+arr.indexOf('native2'))
+           _('arr includes "native2" '+arr.includes('native2'))
+           _('arr includes "xx" '+arr.includes('xx'))
+
+
+
+        </script>
+    </body>
+</html>
