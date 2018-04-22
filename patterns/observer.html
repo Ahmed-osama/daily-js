@@ -107,7 +107,7 @@
         let listitems = document.querySelectorAll('.list-group-item')
         listitems.forEach((item, index) => {
              observe.subscribe('item/click', showimg)
-             item.addEventListener('click', function(){
+            item.addEventListener('click', function(){
                 observe.puplish('item/click',{
                     el: item,
                     data:data[index]
