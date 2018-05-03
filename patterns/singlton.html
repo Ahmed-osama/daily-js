@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>singletone</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+        crossorigin="anonymous">
+        <style>
+            .list-group-item{
+                display: flex;
+                align-items: center;
+            }
+            .list-group-item img{
+                width: 35px;
+                height: 35px;
+                flex-basis: 35px;
+                margin-right: 10px;
+                border-radius: 50%;
+                background: #dfdfdf;
+            }
+        </style>
+</head>
+
+<body>
+    <h1>single toon</h1>
+    <p>makes sure a calss has only one instance</p>
+
+    <ul class="list-group" id="list">
+        
+    </ul>
+
+</body>
+<script>
+    var dom = (function() {
+       let _counter = 0;
+       let instance ;
+
+       function generateId(){
+           return "id"+Math.round(Math.random()*1000 + _counter)
+       }
+
+       function creat(tagname, id) {
+           var el = document.createElement(tagname)
+           el.id = id || generateId()
+           return el
+       }
+       function creatInstance(){
+           return {
+           generateId,
+           creat
+
+           }
+       }
+       return {
+           getInstance(){
+               return instance || (instance = creatInstance())
+           }
+       }
+
+    }())
+
+    var myInstanceOfDom = dom.getInstance();
+    console.log(myInstanceOfDom)
+    var div = myInstanceOfDom.creat('div')
+    console.log(div)
+     var newInstanceTest = dom.getInstance()
+     console.log('same instance check', myInstanceOfDom == newInstanceTest )
+</script>
+
+</html>
