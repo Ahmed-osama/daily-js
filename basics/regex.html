@@ -4,6 +4,14 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <meta charset="UTF-8">
     </head>
+    <style>
+        .text-­success{
+            color:green;
+        }
+        .text­-warning{
+            color:red;
+        }
+    </style>
     <body>
         <div class="container">
             <p class="h1 bg-info">
@@ -14,28 +22,37 @@
             <table class="table table­-striped">
                 <tr>
                     <th class="h4" style='width:25%;'> check (ll)</th>
-                    <td style='width:15%;' ><input type="text" id='patern_ll_input'></td>
+                    <td style='width:15%;' ><input type="text" id='patern_ll_input' value="heellow22"></td>
                     <td style='width:50%;' class="test-result" id="pattern_ll_result"></td>
                     <td style='width:10%;'><a href="#" class="btn btn-primary" id="pattern_ll_btn">Test</a></td>
+                </tr>
+
+                <tr>
+                    <th class="h4" style='width:25%;'> check (1|2px)</th>
+                    <td style='width:15%;' ><input type="text" id='patern_2_input' value="heellow22"></td>
+                    <td style='width:50%;' class="test-result" id="pattern_2_result"></td>
+                    <td style='width:10%;'><a href="#" class="btn btn-primary" id="pattern_2_btn">Test</a></td>
                 </tr>
             </table> 
         </div>
        
         <script>
             "use strict";   
+            //Table Creator
+
             //Preview Method
                 function TestPreview(pattern, input, target, btn){
-                    console.log(pattern, input, target, btn)
                     btn.addEventListener('click', function(){
 
                         let msg = pattern.test(input.value) ? `<span class="text-­success">you matched the pattern</span>` : `<span class="text­-warning"> your input does not match </span>`;
-                        console.log(msg);
+            
                         target.innerHTML = msg
                     })
                     
                 }
             //regexes
                 var regex_ll = new RegExp ('ll')
+                var regex_2 = new RegExp ('(1|2)?px')
             
             //dispatch to dom
                 TestPreview(
@@ -44,6 +61,14 @@
                     document.querySelector('#pattern_ll_result'),
                     document.querySelector('#pattern_ll_btn')
                 )
+
+                TestPreview(
+                    regex_2,
+                    document.querySelector('#patern_2_input'),
+                    document.querySelector('#pattern_2_result'),
+                    document.querySelector('#pattern_2_btn')
+                )
+
 
         </script>
     </body>
