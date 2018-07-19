@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Stack</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <h1>Stack</h1>
+
+    <p class="list-group" id="view">
+
+    </p>
+
+</body>
+<script>
+    class Queue {
+
+        constructor() {
+            this.storage = {}
+            this.head = 0
+            this.tail = 0
+        }
+        static x = 0
+
+        enqueue(value) {
+            this.storage[this.tail++] = value
+            this.view()
+        }
+        view() {
+            console.log(this.storage)
+        }
+        count() {
+            return this.tail - this.head
+        }
+        dequeue() {
+            delete this.storage[this.head]
+            this.head++
+                this.view()
+        }
+
+    }
+
+    let items = new Queue;
+    items.enqueue('ahmed')
+    items.enqueue('osama')
+    items.enqueue('khalil')
+    items.dequeue()
+</script>
+
+</html>

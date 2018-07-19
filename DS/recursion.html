@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Recursion</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <h1>Stack</h1>
+
+    <ul class="list-group" id="view">
+
+    </ul>
+
+</body>
+<script>
+    const listItem = index => `<li>${index}</li>`
+    let render = (target, template) => target.innerHTML += template
+
+    function looper(max) {
+        let i = 0;
+        view.innerHTML = ''
+        return function itrator() {
+
+            render(view, listItem(i++))
+            if (i < max) {
+                setTimeout(itrator, 500)
+            }
+        }
+    }
+
+    looper(115)()
+</script>
+
+</html>
