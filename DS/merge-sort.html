@@ -14,7 +14,6 @@
         display: flex;
         flex-wrap: wrap;
         flex-direction: row;
-        justify-content: space-around;
     
     }
     .grid{
@@ -44,28 +43,25 @@
     <h1>Merge Sort</h1>
     <h2>Devide & conqure</h2>
 
-    <div class="container" id="devide_0">
+    <div class="container" id="devide">
 
     </div>
-    <div class="container" id="conqure_0">
+    <div class="container" id="conqure">
 
     </div>
 
 </body>
 <script>
     const pureArr = [9,18,7,61,5,13,4,21,0,13]
-    let mergeI=1
-    let devideI = 1
-    let devide = (arr,data=[1,'']) =>{
-        console.log(arr,data)
-        view(arr,data,'devide_')
-        
+   
+    let devide = (arr) =>{
+     
+        view(arr,'devide')
         if (arr.length <= 1) return arr
         let leftHalf = arr.slice(0,arr.length/2)
         let rightHalf = arr.slice(arr.length/2)
-        devideI++
-        let leftSorted = devide(leftHalf,[devideI,'a'])
-        let rightSorted = devide(rightHalf,[devideI,'b'])
+        let leftSorted = devide(leftHalf)
+        let rightSorted = devide(rightHalf)
         
         return merge(leftSorted, rightSorted)
         
@@ -88,25 +84,16 @@
             }
         }
         
-        //view(result,mergeI++,'conqure_')
+        view(result,'conqure')
         return result
     }
   
    
-    function view(arr=[],data,target) {
-        let [i,type] = data
+    function view(arr=[],target) {
        
         let list =Array.isArray(arr)?arr.map(item =>`<span class="cell">${Array.isArray(item)?item.join(""):item}</span>` ).join(""):arr
-        list = `<div class="grid" style="flex-basis:${100/i}%;">${list}</div>`
-        let parent=target+(i-1)+(i-2==0?'':type)
-        console.log(i, target, parent)
-        let container = `<div class="grid" style="flex-basis:${100/i}%;" id="${target+i+type}">${list}</div>`
-        if(document.getElementById(target+i+type) === null){
-            document.getElementById(parent).innerHTML += container
-        }else{
-            document.getElementById(target+i+type).innerHTML += container
-        }
-       
+        list = `<div class="grid" style="flex-basis:${100}%;">${list}</div>`
+        document.getElementById(target).innerHTML += list
     }
 
     
