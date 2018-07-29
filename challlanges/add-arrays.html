@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <title>Leet code 2</title>
+    </head>
+    <body>
+       
+        <script>
+            var addTwoNumbers = function(l1, l2) {
+                let acc=[]
+                let rest=0
+                //debugger
+                for(i=0; i<l1.length; i++){
+
+                    newnum = l1[i]+l2[i]+ (Array.isArray(rest)?parseInt(rest.join("")):rest)
+                    newnum =  newnum.toString().split('').map(digit =>  +digit).reverse()
+                    acc.push((Array.isArray(newnum)?newnum[0]:newnum))
+                    rest =Array.isArray(newnum) && newnum.length>1 ? newnum.slice(1) :0
+                }
+                result = Array.isArray(rest)?[...acc,...rest]:acc
+                return result
+            };
+
+            console.log([7, 0, 8].toString() === addTwoNumbers([2,4,3],[5,6,4]).toString())
+            console.log(addTwoNumbers([7,4,3,3,7,2],[5,6,4,1,0,9]))
+
+        </script>
+    </body>
+</html>
