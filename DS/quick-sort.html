@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>quick Sort</title>
+  
+   
+</head>
+<style>
+    .container{
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+    
+    }
+    .grid{
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+        flex-wrap: wrap;
+        flex-direction: row;
+
+    }
+   
+    .cell{
+        width: 70px;
+        height: 70px;
+        margin: 0 5px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+        background:green;
+    }
+</style>
+
+<body>
+    <h1>quick Sort</h1>
+ 
+
+    <div class="container" id="devide">
+
+    </div>
+  
+
+</body>
+<script>
+    const pureArr = [9,18,7,61,5,13,4,21,0,13]
+    function swap(arr,index_a,index_b){
+        if(index_a === index_b) return
+        let a = arr[index_a]
+        let b = arr[index_b]
+        
+        arr[index_a] = b
+        arr[index_b] = a
+
+        return arr
+        
+    }
+    function quickSort(arr, high = arr.length-1, low = 0){
+   
+        view(arr,'devide')
+        if(low<high){
+            let p = partition(arr, low, high)
+            console.log(p)
+            quickSort(arr, p-1, low)
+            quickSort(arr, high,  p+1)
+        }
+        if(high-low === arr.length-1) return arr
+    }
+    function partition(arr, lo, hi){
+
+       let pivot = arr[hi]
+       let pivotLoc = lo
+       for(var i = lo; i<hi; i++){
+           if(arr[i]<= pivot){
+               swap(arr, pivotLoc, i )
+               pivotLoc++
+           }
+       }
+       swap(arr, pivotLoc, hi)
+       return pivotLoc
+               
+    }
+    function view(arr=[],target) {
+       
+        let list =Array.isArray(arr)?arr.map(item =>`<span class="cell">${Array.isArray(item)?item.join(""):item}</span>` ).join(""):arr
+        list = `<div class="grid" style="flex-basis:${100}%;">${list}</div>`
+        document.getElementById(target).innerHTML += list
+    }
+
+
+    quickSort(pureArr)
+    
+</script>
+
+</html>
