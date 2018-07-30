@@ -2,24 +2,24 @@
 
 <body>
     <script>
-            let ramy = 'ramy medht'
+            let firstname = 'firstname lastname'
 
             function getname(){
-                let ahmed = 'ahmed osama'
-                console.log(ramy, ahmed) // ramy, ahmed osama, undefined
+                let duke = 'duke osama'
+                console.log(firstname, duke) // firstname, duke osama, undefined
             }
             {
-                var omar = 'omar mohamed'
-                console.log(ramy, omar) //ramy,  undefined, omar, 
+                var koko = 'koko wawa'
+                console.log(firstname, koko) //firstname,  undefined, koko, 
             }
 
             getname() 
-            console.log(ramy, omar) // ramy , undefined, undefined
+            console.log(firstname, koko) // firstname , undefined, undefined
 
             function names(){
-                var x = 'ramy'
+                var x = 'firstname'
                 return function(){
-                    return x + ' medhat'
+                    return x + ' lastname'
                 }
             }
 
@@ -41,9 +41,9 @@
             }
 
 
-            render(fullname('ahmed', 'mohamed'),  'body')
-            render(fullname('ahmed', 'osama'),  'body')
-            render(fullname('ramy', 'medhat'), 'body')
+            render(fullname('duke', 'wawa'),  'body')
+            render(fullname('duke', 'osama'),  'body')
+            render(fullname('firstname', 'lastname'), 'body')
     </script>
 </body>
 </html>
