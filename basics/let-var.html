@@ -1,0 +1,49 @@
+<html>  
+
+<body>
+    <script>
+            let ramy = 'ramy medht'
+
+            function getname(){
+                let ahmed = 'ahmed osama'
+                console.log(ramy, ahmed) // ramy, ahmed osama, undefined
+            }
+            {
+                var omar = 'omar mohamed'
+                console.log(ramy, omar) //ramy,  undefined, omar, 
+            }
+
+            getname() 
+            console.log(ramy, omar) // ramy , undefined, undefined
+
+            function names(){
+                var x = 'ramy'
+                return function(){
+                    return x + ' medhat'
+                }
+            }
+
+            function name2(){
+                var lname="last name";
+                console.log(x )
+            }
+            function first(name){
+                return `<h1>${name}</h1>`
+            }
+            function last(name){
+                return `<h3>${name}</h3>`
+            }
+            function fullname(firstname, lastname){
+                return first(firstname) + last(lastname) + '<hr/>'
+            }
+            function render(el,target){
+                document.querySelector(target).innerHTML +=el
+            }
+
+
+            render(fullname('ahmed', 'mohamed'),  'body')
+            render(fullname('ahmed', 'osama'),  'body')
+            render(fullname('ramy', 'medhat'), 'body')
+    </script>
+</body>
+</html>
