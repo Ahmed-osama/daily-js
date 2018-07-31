@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Linked List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+        crossorigin="anonymous">
+    <style>
+       
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>linked list</h1>
+    </div>
+
+    <ul id="view">
+
+    </ul>
+
+</body>
+<script>
+    class Item {
+        constructor(item, next){
+            this.value = item;
+            this.next = next
+            
+        }
+     
+        toString(){
+            return this.value
+        }
+        makeRelationTo(item, relation){
+            item[relation] = this 
+           
+        }
+        relationTo(item){
+            let relations = []
+            for(let key in item){
+                if(item[key] === this) relations.push(key) 
+            }
+            if(relations.length >0){
+                return relations.join(' & ')
+            }
+            return 'nothing'
+        }
+
+    }
+
+    class LinkedList {
+        constructor(headValue){
+            this.head = headValue
+            this.tail = this.head
+            this.countList()
+        }
+        countList(){
+            if(!this.head) return 0
+           let  node = this.head
+           let i = 0
+            while(node){
+                node = node.next
+                i++
+            }
+            this.length = i
+            return i
+        }
+        forEach(callback){
+            let node=this.head
+            while(node){
+                callback(node)
+                node = node.next
+            }
+        }
+
+        print(){
+            let result =[]
+            this.forEach(val => result.push(val))
+            return result.join(', ')
+        }
+
+        insertAtIndex(index, value){
+            if(index>this.length-1) return `add number less than${this.length-1}`
+            let node = this.head
+            let i = 0
+            if(i===0){
+                this.head =  new Item(value, this.head)
+            }else{
+
+                while(i<index){
+                    node = node.next
+                    i++
+                }
+                node.next = new Item(value, node.next)
+            }
+            this.length++
+        }
+        insertAfter(node, value){
+            node.next = new Item(value, node.next)
+            this.length++
+        }
+        getItematIndex(index){
+            if(index>this.length-1) return `add number less than${this.length-1}`
+            if(index===0){
+                return this.head 
+            }else{
+                let node = this.head
+                let i = 0
+                while(i<index){
+                    node = node.next
+                    i++
+                }
+                return node
+            }
+        }
+        makeArray(){
+            let arr = []
+            this.forEach(val=>arr.push({...val}))
+            return arr
+        }
+        getItem(name){
+            let item ;
+            this.forEach(val=>{
+                if(val.value === name){
+                    item =val
+                }
+            })
+            return item
+        }
+        getChain(relation, item){
+            item = this.getItem(item)
+
+            let arr = []
+            let node = item[relation]
+            while(node){
+                arr.push(node)
+                node = node[relation]
+            }
+            return arr
+        }
+
+    }
+    let philipe = new Item('philipe', null)
+    let jack = new Item('jack', philipe)
+    let cody = new Item('cody', jack)
+
+    let mylist = new LinkedList(cody)
+    function render(str, target){
+        document.getElementById(target).innerHTML+=container(str)
+    }
+    
+    mylist.insertAfter(philipe, 'matilda')
+    mylist.insertAtIndex(0, 'rachel')
+    
+    mylist.forEach((item)=>{
+        render(`<li>${item}</li>`, 'view')
+    })
+    function container(child){
+        return `<hr/><div class="container">${child}</div>`
+    }
+    mylist.getItematIndex(2).makeRelationTo(mylist.getItematIndex(0),'uncle')
+    mylist.getItematIndex(0).makeRelationTo(mylist.getItematIndex(2),'neith')
+    mylist.getItem('philipe').makeRelationTo(mylist.getItem('jack'),'parent')
+    mylist.getItem('jack').makeRelationTo(mylist.getItem('cody'),'parent')
+    mylist.getItem('matilda').makeRelationTo(mylist.getItem('jack'),'wife')
+
+    render(mylist.getItem('cody') +' fathers are '+mylist.getChain('parent','cody').map(item=>item.value).join(' then '),  'view')
+    render(mylist.getItem('rachel') +'\'s uncle is '+ mylist.getItem('rachel').uncle,  'view')
+    render(mylist.getItem('jack') +'\'s neith is '+ mylist.getItem('jack').neith ,  'view')
+    render(mylist.getItem('matilda') +' is '+ mylist.getItem('matilda').relationTo(mylist.getItem('jack')) +' to ' +mylist.getItem('jack'),  'view')
+    render(mylist.getItem('jack') +' is '+ mylist.getItem('jack').relationTo(mylist.getItem('philipe')) +' to ' +mylist.getItem('philipe'),  'view')
+    render(mylist.getItem('philipe') +' is '+ mylist.getItem('philipe').relationTo(mylist.getItem('jack')) +' to ' +mylist.getItem('jack'),  'view')
+</script>
+
+</html>
