@@ -48,6 +48,26 @@
             }
             return 'nothing'
         }
+        relationsCount(){
+            return this.keys().length 
+        }
+        keys(){
+            return Object.keys(this)
+        }
+        is(){
+            let relations = []
+            for(let key in this){
+                if(key != 'value'){
+
+                    relations.push(key + ' is ' +this[key]) 
+                }
+            }
+            if(relations.length >0){
+                return this + '\'s ' + relations.join(' & ')
+            }
+            return 'nothing'
+        }
+        
 
     }
 
@@ -75,19 +95,18 @@
                 node = node.next
             }
         }
-
         print(){
             let result =[]
             this.forEach(val => result.push(val))
             return result.join(', ')
         }
-
         insertAtIndex(index, value){
             if(index>this.length-1) return `add number less than${this.length-1}`
             let node = this.head
             let i = 0
-            if(i===0){
-                this.head =  new Item(value, this.head)
+            if(index === 0){
+                let oldHead = this.head 
+                this.head =  new Item(value, oldHead)
             }else{
 
                 while(i<index){
@@ -130,8 +149,8 @@
             })
             return item
         }
-        getChain(relation, item){
-            item = this.getItem(item)
+        getChain(relation ='next', item){
+            item = this.getItem(item) || this.head
 
             let arr = []
             let node = item[relation]
@@ -141,26 +160,44 @@
             }
             return arr
         }
-
+        getMostRelational(){
+            let item,score=0;
+            this.forEach(node => {
+                if(node.relationsCount()>score){
+                    item = node
+                    score = node.relationsCount()
+                }
+            })
+            return item
+        }
+  
     }
+    function render(str, target){
+        document.getElementById(target).innerHTML+=container(str)
+    }
+    function container(child){
+        return `<hr/><div class="container">${child}</div>`
+    }
+
+
     let philipe = new Item('philipe', null)
     let jack = new Item('jack', philipe)
     let cody = new Item('cody', jack)
 
     let mylist = new LinkedList(cody)
-    function render(str, target){
-        document.getElementById(target).innerHTML+=container(str)
-    }
+   
     
+  
+
+
+
+
+
     mylist.insertAfter(philipe, 'matilda')
     mylist.insertAtIndex(0, 'rachel')
+
+  
     
-    mylist.forEach((item)=>{
-        render(`<li>${item}</li>`, 'view')
-    })
-    function container(child){
-        return `<hr/><div class="container">${child}</div>`
-    }
     mylist.getItematIndex(2).makeRelationTo(mylist.getItematIndex(0),'uncle')
     mylist.getItematIndex(0).makeRelationTo(mylist.getItematIndex(2),'neith')
     mylist.getItem('philipe').makeRelationTo(mylist.getItem('jack'),'parent')
@@ -173,6 +210,12 @@
     render(mylist.getItem('matilda') +' is '+ mylist.getItem('matilda').relationTo(mylist.getItem('jack')) +' to ' +mylist.getItem('jack'),  'view')
     render(mylist.getItem('jack') +' is '+ mylist.getItem('jack').relationTo(mylist.getItem('philipe')) +' to ' +mylist.getItem('philipe'),  'view')
     render(mylist.getItem('philipe') +' is '+ mylist.getItem('philipe').relationTo(mylist.getItem('jack')) +' to ' +mylist.getItem('jack'),  'view')
+    render('all next are ' + mylist.getChain().join(', '),  'view')
+    mylist.forEach((item)=>{
+        render(`<li>${item.is()}</li>`, 'view')
+    })
+    render('most relational person is ' + mylist.getMostRelational(),  'view')
+    console.log(mylist.makeArray())
 </script>
 
 </html>

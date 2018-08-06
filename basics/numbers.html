@@ -10,8 +10,8 @@
 
         <script>
             "use strict";  
-            function _(msg){
-                console.log(msg)
+            function _(...msg){
+                console.log(...msg)
             }
 
             // all numbers in JS are sotred in 64-bit Formate
@@ -33,15 +33,15 @@
             */
 
             let number = 1023
-            _(number.toString(16)) // converts to hexa code
-            _(number.toString(2)) // converts to binary code
-            _(number.toString(36)) // used to shorten large numbers
+            _("Hex ==> "+number.toString(16)) // converts to hexa code
+            _("Binary ==> "+number.toString(2)) // converts to binary code
+            _("short large numbers ==> "+number.toString(36)) // used to shorten large numbers
             /*
                 12312312.toString() <= false way
                 12312312..toString() <= true
                 (12312312).toString() <= true
             */
-
+            _('convert back', Number(number.toString(36)))
 
             //Math object
 
