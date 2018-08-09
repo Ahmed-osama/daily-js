@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Linked List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+        crossorigin="anonymous">
+    <style>
+        .cell{
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            align-items: center;
+        
+        }
+        .cell__title{
+            width: 40px;
+            height: 40px;
+            background:orange;
+            border-radius: 50%;
+            line-height: 40px;
+            text-align: center;
+            margin:10px;
+            
+        }
+        .cell__title--selected{
+            background:green;
+            color:white;    
+        }
+
+        .cell__container{
+            display: flex;
+            width:100%;
+        }
+        .cell__container > * {
+            flex-basis:50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="center"  >Binary Search tree</h1>
+        <p> find : <input type="number" id="find"></p>
+    </div>
+    <ul id="view">
+
+    </ul>
+</body>
+<script>
+    function render(target, str){
+        console.log(target)
+        document.getElementById(target).innerHTML+=container(str)
+    }
+    let renderToView = render.bind(null,"view")
+    
+    function container(child){
+        return `${child}`
+    }
+    let capsulate = str => renderToView(container(str))
+    
+
+    class BinarySearchTree{
+        constructor(number, level){
+            this.value = number
+            this.left = null
+            this.right = null
+            this.level = level || 1
+        }
+        addNumber(number){
+            
+            let direction = number <= this.value ? 'left':'right'
+            if(this[direction]) this[direction].insert(number)
+            else this[direction] = new BinarySearchTree(number, this.level+1)
+            return this
+        }
+        insert(number){
+            if(Array.isArray(number)){
+                number.forEach(n => this.insert(n))
+            }else{
+                this.addNumber(number)
+            }
+        }
+        circleWidth(number){
+            let diamter = Math.floor(3/number *50)
+            return `
+                width:${diamter}px;
+                height:${diamter}px;
+                line-height:${diamter}px;
+                font-size:${Math.floor(diamter/3*2)}px;
+            `
+        }
+        render(){
+            return `
+                <div class="cell" id="id-${this.value}">
+                    <strong class="cell__title" style="${this.circleWidth(this.level)}">${this.value}</strong>
+                    <div class="cell__container">
+                        ${!!this.left?this.left.render():` <div class="cell"></div>`}
+                        ${!!this.right? this.right.render():` <div class="cell"></div>`}
+                    </div>
+                </div>
+            `
+        }
+    }
+
+   let bst = new BinarySearchTree(7)
+   let rnadomize = (min, max) =>  Math.max(Math.floor(Math.random() * max) + 1, min);
+   
+   let arr = Array.from({length:25},n => rnadomize(1,25))
+   console.log(arr)
+   bst.insert(arr)
+   capsulate(bst.render() )   
+
+
+   
+</script>
+
+</html>
