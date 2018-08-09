@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Linked List</title>
+    <title>Binary search tree</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
         crossorigin="anonymous">
     <style>
@@ -14,6 +14,7 @@
             flex-direction: column;
             text-align: center;
             align-items: center;
+            position: relative;
         
         }
         .cell__title{
@@ -25,7 +26,30 @@
             text-align: center;
             margin:10px;
             transition: 0.2s;
+            position:relative;
             
+        }
+        .cell__title:hover + .cell__popover{
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+
+        }
+        .cell__popover{
+            position: absolute;
+            bottom:100%;
+            width: 300px;
+            background: white;
+            border-radius:2px;
+            left: 0;
+            right: 0;
+            margin: auto;
+            opacity: 0;
+            transform: translateY(10px);
+            transition :0.2s;
+            visibility: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            z-index: 1;
         }
         .cell__title--selected{
             transform:  scale(1.5);
@@ -103,6 +127,22 @@
             return `
                 <div class="cell" id="id-${this.path}">
                     <strong class="cell__title" style="${this.circleWidth(this.level)}">${this.value}</strong>
+                    <table class="table cell__popover">
+                        ${!!this.path ?`<tr>
+                            <td>path is</td>
+                            <td>${this.path}</td>
+                        </tr>`:''
+                        }
+                        ${!!this.parent ?`<tr>
+                            <td>parent is</td>
+                            <td>${this.parent.value}</td>
+                        </tr>`:''
+                        }
+                        ${(!!this.left || !!this.right) ? `<tr>
+                            <td>children are</td>
+                            <td>${!!this.left ? this.left.value:''}, ${!!this.right ? this.right.value:''}</td>
+                        </tr>`:''}
+                    </table>
                     <div class="cell__container">
                         ${!!this.left?this.left.render():` <div class="cell"></div>`}
                         ${!!this.right? this.right.render():` <div class="cell"></div>`}
