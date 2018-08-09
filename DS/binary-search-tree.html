@@ -33,8 +33,8 @@
             color:white;
         }
         .cell__title--blur{
-            filter:blur(1px);
-            opacity: 0.9;
+            /* filter:blur(1px); */
+            opacity: 0.5;
         }
         .cell__container{
             display: flex;
@@ -96,7 +96,7 @@
                 width:${diamter}px;
                 height:${diamter}px;
                 line-height:${diamter}px;
-                font-size:${Math.floor(diamter/3*2)}px;
+                font-size:${Math.floor(diamter*0.5)}px;
             `
         }
         render(){
@@ -135,7 +135,13 @@
 
    document.getElementById('find').addEventListener('keyup',(e)=>{
        e.preventDefault()
-
+        if(e.target.value === ''){
+            !!document.querySelectorAll('.cell__title') && document.querySelectorAll('.cell__title').forEach(item => {
+                item.classList.remove('cell__title--blur')
+                item.classList.remove('cell__title--active')
+            })
+            return false
+        }
        !!bst.find(e.target.value) && bst.find(e.target.value).activate()
    })
 
