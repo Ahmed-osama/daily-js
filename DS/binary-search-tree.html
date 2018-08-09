@@ -24,13 +24,18 @@
             line-height: 40px;
             text-align: center;
             margin:10px;
+            transition: 0.2s;
             
         }
         .cell__title--selected{
+            transform:  scale(1.5);
             background:green;
-            color:white;    
+            color:white;
         }
-
+        .cell__title--blur{
+            filter:blur(1px);
+            opacity: 0.9;
+        }
         .cell__container{
             display: flex;
             width:100%;
@@ -44,7 +49,7 @@
 <body>
     <div class="container">
         <h1 class="center"  >Binary Search tree</h1>
-        <p> find : <input type="number" id="find"></p>
+        <p> find : <input type="number" id="find" min="0" max="25"></p>
     </div>
     <ul id="view">
 
@@ -52,7 +57,6 @@
 </body>
 <script>
     function render(target, str){
-        console.log(target)
         document.getElementById(target).innerHTML+=container(str)
     }
     let renderToView = render.bind(null,"view")
@@ -64,17 +68,19 @@
     
 
     class BinarySearchTree{
-        constructor(number, level){
+        constructor(number, level, parent){
             this.value = number
             this.left = null
             this.right = null
             this.level = level || 1
+            this.parent = parent || null
+            this.path = `${(!!this.parent && (this.parent.path || this.parent.value )|| 0)}-${this.value}`
         }
         addNumber(number){
             
             let direction = number <= this.value ? 'left':'right'
             if(this[direction]) this[direction].insert(number)
-            else this[direction] = new BinarySearchTree(number, this.level+1)
+            else this[direction] = new BinarySearchTree(number, this.level+1, this)
             return this
         }
         insert(number){
@@ -95,7 +101,7 @@
         }
         render(){
             return `
-                <div class="cell" id="id-${this.value}">
+                <div class="cell" id="id-${this.path}">
                     <strong class="cell__title" style="${this.circleWidth(this.level)}">${this.value}</strong>
                     <div class="cell__container">
                         ${!!this.left?this.left.render():` <div class="cell"></div>`}
@@ -104,15 +110,36 @@
                 </div>
             `
         }
+        activate(){
+            !!document.querySelector('.cell__title--selected') && document.querySelector('.cell__title--selected').classList.remove('cell__title--selected')
+            !!document.querySelectorAll('.cell__title') && document.querySelectorAll('.cell__title').forEach(item => item.classList.add('cell__title--blur'))
+            document.querySelector(`#id-${this.path} .cell__title`).classList.remove('cell__title--blur')
+            document.querySelector(`#id-${this.path} .cell__title`).classList.add('cell__title--selected')
+        }
+        find(value){
+          
+            if(this.value === parseInt(value)) return this
+            else if(value < this.value ) return !!this.left && this.left.find(value)
+            else if(value > this.value ) return !!this.right && this.right.find(value)
+            else return false
+        }
     }
 
-   let bst = new BinarySearchTree(7)
    let rnadomize = (min, max) =>  Math.max(Math.floor(Math.random() * max) + 1, min);
-   
    let arr = Array.from({length:25},n => rnadomize(1,25))
-   console.log(arr)
+   let avg = Math.floor(arr.reduce((acc,n) =>acc+n,0)/arr.length)
+   let bst = new BinarySearchTree(avg)
    bst.insert(arr)
-   capsulate(bst.render() )   
+   capsulate(bst.render())   
+
+
+   document.getElementById('find').addEventListener('keyup',(e)=>{
+       e.preventDefault()
+
+       !!bst.find(e.target.value) && bst.find(e.target.value).activate()
+   })
+
+
 
 
    
