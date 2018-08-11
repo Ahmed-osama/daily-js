@@ -15,14 +15,6 @@
         .container--extra-margin{
             margin-bottom: 60px;
         }
-        .cell{
-            display: flex;
-            flex-direction: column;
-            text-align: center;
-            align-items: center;
-            position: relative;
-            min-width: 70px;
-        }
         .square{
             width: 30px;
             height: 30px;
@@ -30,8 +22,21 @@
             align-items: center;
             justify-content: center;
             background:#007bff;
-            color:#fff
+            color:#fff;
+            margin-right:10px;
+            margin-bottom: 10px;
+            border-radius: 50%;
         }
+        .cell{
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            align-items: center;
+            position: relative;
+            margin:0 auto;
+            min-width: 40px;
+        }
+       
         .cell__title{
             width: 40px;
             height: 40px;
@@ -39,7 +44,7 @@
             border-radius: 50%;
             line-height: 40px;
             text-align: center;
-            margin:10px;
+            margin:5px;
             transition: 0.2s;
             position:relative;
             
@@ -74,15 +79,19 @@
         .cell__title--blur{
             opacity: 0.5;
         }
+        .cell__title--empty{
+            background:#dfdfdf;
+            opacity: 0.1;
+        }
         .cell__container{
             border-top:1px solid rgba(0, 0, 0, 0.1);
-            display: flex;
             width:100%;
+            max-width: 100%;
+            /* display: flex; */
         }
         .cell__container > * {
-            flex-basis:50%;
-            min-width: 50%;
-            max-width: 50%;
+            float: left;
+            
         }
     </style>
 </head>
@@ -96,13 +105,18 @@
             <button class='btn btn-primary' id="inorder_btn">preview in order traverse</button>
             <button class='btn btn-primary' id="preorder_btn">preview preorder traverse</button>
             <button class='btn btn-primary' id="post_btn">preview  post traverse</button>
+            <button class='btn btn-primary' id="bread_btn">preview  bread first traverse</button>
+        </div>
+        <hr>
+        <div class="btn-group">
+             add : <input type="number" min="0" id="add_value" > <div id="add_btn" class="btn btn-primary"> add</div>
         </div>
     </div>
 
     <div id='view0' class="container container--extra-margin">
 
     </div>
-    <div id='view'>
+    <div id='view' style='width:2000px'>
     </div>
     <div class="container" id="view2"></div>
     <div class="container" id="view3"></div>
@@ -119,6 +133,12 @@
     }
     let capsulate = str => renderToView(container(str))
     
+    function fact(x) {
+   if(x==0) {
+      return 1;
+   }
+   return x * fact(x-1);
+}
 
     class BinarySearchTree{
         constructor(number, level, parent){
@@ -126,23 +146,39 @@
             this.left = null
             this.right = null
             this.level = level || 1
-            this.parent = parent || null
+            this.parent = parent || false
             this.path = `${(!!this.parent && (this.parent.path || this.parent.value )|| 0)}-${this.value}`
             this.timer = null
+            this.lastInserted = false
         }
         addNumber(number){
-            
+            number = parseInt(number)
             let direction = number <= this.value ? 'left':'right'
-            if(this[direction]) this[direction].insert(number)
-            else this[direction] = new BinarySearchTree(number, this.level+1, this)
+            if(!!this[direction]){
+                this[direction].insert(number)
+            }else{
+                this[direction] = new BinarySearchTree(number, this.level+1, this)
+                return this[direction]
+            } 
             return this
+        }
+        parents(){
+            
+            if(this.parent){
+                return  this.parent.parents()
+            }else{
+                return this
+            }
         }
         insert(number){
             if(Array.isArray(number)){
                 number.forEach(n => this.insert(n))
             }else{
-                this.addNumber(number)
+                let theNewlyInsertedNode = this.addNumber(number)
+                if(!!theNewlyInsertedNode) theNewlyInsertedNode.parents().lastInserted =  theNewlyInsertedNode
+                return theNewlyInsertedNode
             }
+            
         }
         circleWidth(number){
             let diamter = Math.floor(3/number *40)
@@ -168,10 +204,43 @@
             if(this.left) this.left.traverseDepthFirst_postOrder(fn)
             if(this.right) this.right.traverseDepthFirst_postOrder(fn)
             fn(this)
-        }   
+        }  
+        travrseBreadthFirst(fn){
+            let queue = [this]
+            while(queue.length){
+                let node =  queue.shift()
+                fn(node)
+                node.left && queue.push(node.left)
+                node.right && queue.push(node.right)
+            }
+        } 
+        isFull(){
+            let result = true;
+            this.travrseBreadthFirst((node)=>{
+                if(!node.left || !node.right)result=false
+            })
+            return result
+        }
+        length(){
+            let result = [];
+            this.travrseBreadthFirst((node)=>{
+               result.push(node)
+            })
+            return result.length
+        }
+        heighestLvl(){
+            let lvl = 0;
+            this.travrseBreadthFirst((node)=>{
+              if(node.level > lvl) lvl = node.level 
+            })
+            return lvl
+        }
+        containerWidth(){
+            return 40*(2*fact(this.heighestLvl()))
+        }
         render(){
             return `
-                <div class="cell" id="id-${this.path}">
+                <div class="cell" id="id-${this.path}" >
                     <strong class="cell__title" style="${this.circleWidth(this.level)}">${this.value}</strong>
                     <table class="table cell__popover">
                         ${!!this.path ?`<tr>
@@ -190,11 +259,19 @@
                         </tr>`:''}
                     </table>
                     <div class="cell__container">
-                        ${!!this.left?this.left.render():` <div class="cell"></div>`}
-                        ${!!this.right? this.right.render():` <div class="cell"></div>`}
+                        ${!!this.left?this.left.render():` <div class="cell"><strong  style="${this.circleWidth(this.level+1)}" class="cell__title cell__title--empty"></strong> <div class="cell__container"></div></div>`}
+                        ${!!this.right?this.right.render():` <div class="cell"><strong  style="${this.circleWidth(this.level+1)}" class="cell__title cell__title--empty"></strong> <div class="cell__container"></div></div>`}
                     </div>
                 </div>
             `
+        }
+        reRender(activate=false){
+         
+            document.getElementById('view').innerHTML =''
+            capsulate(bst.render())
+            activate && this.parents().lastInserted.activate()
+               
+            
         }
         activate(bool=true){
             bool &&  !!document.querySelector('.cell__title--selected') && document.querySelectorAll('.cell__title--selected').forEach(item => item.classList.remove('cell__title--selected'))
@@ -212,8 +289,8 @@
             !!document.querySelector('.cell__title--selected') && document.querySelectorAll('.cell__title--selected').forEach(item => item.classList.remove('cell__title--selected'))
         }
         find(value){
-          
-            if(this.value === parseInt(value)) return this
+            
+            if(parseInt(this.value) === parseInt(value)) return this
             else if(value < this.value ) return !!this.left && this.left.find(value)
             else if(value > this.value ) return !!this.right && this.right.find(value)
             else return false
@@ -225,7 +302,8 @@
     let avg = Math.floor(arr.reduce((acc,n) =>acc+n,0)/arr.length)
     let bst = new BinarySearchTree(avg)
     bst.insert(arr)
-    capsulate(bst.render())   
+    capsulate(bst.render())
+    document.getElementById('view').style.width = bst.containerWidth()
 
     //In Order Traverse
        
@@ -278,6 +356,20 @@
                     Post-Order traversal :  visit the current node after its child nodes
             </p>`
        })
+       document.getElementById('bread_btn').addEventListener('click', ()=>{
+            let index=1
+            let travrseBreadthFirst_output = ''
+            bst.deactiveAll()
+            bst.travrseBreadthFirst(node => {
+                node.lazyActive(index)
+                index++
+                travrseBreadthFirst_output += (`<span class="square">${node.value}</span>`)
+            })
+            if(document.getElementById('view4').innerHTML === '') render('view4','In postOrder Traverse : ' + travrseBreadthFirst_output)
+            document.getElementById('view0').innerHTML = `<p>
+                    bread first:  visit the current node then both children
+            </p>`
+       })
 
     document.getElementById('find').addEventListener('keyup',(e)=>{
        e.preventDefault()
@@ -289,6 +381,15 @@
             return false
         }
        !!bst.find(e.target.value) && bst.find(e.target.value).activate()
+      
+    })
+    document.getElementById('add_btn').addEventListener('click',(e)=>{
+        if(document.getElementById('add_value').value === '') return
+      bst.insert(document.getElementById('add_value').value)
+       
+        bst.reRender()
+        document.getElementById('add_value').value =''
+        
     })
 
 
