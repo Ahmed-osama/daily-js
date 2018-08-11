@@ -9,13 +9,28 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
         crossorigin="anonymous">
     <style>
+        .container{
+            margin-bottom: 30px;
+        }
+        .container--extra-margin{
+            margin-bottom: 60px;
+        }
         .cell{
             display: flex;
             flex-direction: column;
             text-align: center;
             align-items: center;
             position: relative;
-        
+            min-width: 70px;
+        }
+        .square{
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background:#007bff;
+            color:#fff
         }
         .cell__title{
             width: 40px;
@@ -53,19 +68,21 @@
         }
         .cell__title--selected{
             transform:  scale(1.5);
-            background:green;
+            background:#007bff;
             color:white;
         }
         .cell__title--blur{
-            /* filter:blur(1px); */
             opacity: 0.5;
         }
         .cell__container{
+            border-top:1px solid rgba(0, 0, 0, 0.1);
             display: flex;
             width:100%;
         }
         .cell__container > * {
             flex-basis:50%;
+            min-width: 50%;
+            max-width: 50%;
         }
     </style>
 </head>
@@ -73,11 +90,23 @@
 <body>
     <div class="container">
         <h1 class="center"  >Binary Search tree</h1>
-        <p> find : <input type="number" id="find" min="0" max="25"></p>
-    </div>
-    <ul id="view">
+        <p> find : <input type="number" id="find" min="0" max="40"></p>
+        <div class="btn-group">
 
-    </ul>
+            <button class='btn btn-primary' id="inorder_btn">preview in order traverse</button>
+            <button class='btn btn-primary' id="preorder_btn">preview preorder traverse</button>
+            <button class='btn btn-primary' id="post_btn">preview  post traverse</button>
+        </div>
+    </div>
+
+    <div id='view0' class="container container--extra-margin">
+
+    </div>
+    <div id='view'>
+    </div>
+    <div class="container" id="view2"></div>
+    <div class="container" id="view3"></div>
+    <div class="container" id="view4"></div>
 </body>
 <script>
     function render(target, str){
@@ -99,6 +128,7 @@
             this.level = level || 1
             this.parent = parent || null
             this.path = `${(!!this.parent && (this.parent.path || this.parent.value )|| 0)}-${this.value}`
+            this.timer = null
         }
         addNumber(number){
             
@@ -115,7 +145,7 @@
             }
         }
         circleWidth(number){
-            let diamter = Math.floor(3/number *50)
+            let diamter = Math.floor(3/number *40)
             return `
                 width:${diamter}px;
                 height:${diamter}px;
@@ -123,6 +153,22 @@
                 font-size:${Math.floor(diamter*0.5)}px;
             `
         }
+        traverseDepthFirst_inOrder(fn){
+            if(!this.left && !this.right) return fn(this)
+            if(this.left) this.left.traverseDepthFirst_inOrder(fn)
+            fn(this)
+            if(this.right) this.right.traverseDepthFirst_inOrder(fn)
+        }
+        traverseDepthFirst_preOrder(fn){
+            fn(this)
+            if(this.left) this.left.traverseDepthFirst_preOrder(fn)
+            if(this.right) this.right.traverseDepthFirst_preOrder(fn)
+        }
+        traverseDepthFirst_postOrder(fn){
+            if(this.left) this.left.traverseDepthFirst_postOrder(fn)
+            if(this.right) this.right.traverseDepthFirst_postOrder(fn)
+            fn(this)
+        }   
         render(){
             return `
                 <div class="cell" id="id-${this.path}">
@@ -150,11 +196,20 @@
                 </div>
             `
         }
-        activate(){
-            !!document.querySelector('.cell__title--selected') && document.querySelector('.cell__title--selected').classList.remove('cell__title--selected')
-            !!document.querySelectorAll('.cell__title') && document.querySelectorAll('.cell__title').forEach(item => item.classList.add('cell__title--blur'))
-            document.querySelector(`#id-${this.path} .cell__title`).classList.remove('cell__title--blur')
+        activate(bool=true){
+            bool &&  !!document.querySelector('.cell__title--selected') && document.querySelectorAll('.cell__title--selected').forEach(item => item.classList.remove('cell__title--selected'))
+            bool && !!document.querySelectorAll('.cell__title') && document.querySelectorAll('.cell__title').forEach(item => item.classList.add('cell__title--blur'))
+            bool && document.querySelector(`#id-${this.path} .cell__title`).classList.remove('cell__title--blur')
             document.querySelector(`#id-${this.path} .cell__title`).classList.add('cell__title--selected')
+        }
+        lazyActive(i){
+            !!this.timer && clearTimeout(this.timer)
+            this.timer =  setTimeout(this.activate.bind(this, false), i*200)
+            
+        }
+        deactiveAll(){
+            !!document.querySelectorAll('.cell__title') && document.querySelectorAll('.cell__title').forEach(item => item.classList.remove('cell__title--blur'))
+            !!document.querySelector('.cell__title--selected') && document.querySelectorAll('.cell__title--selected').forEach(item => item.classList.remove('cell__title--selected'))
         }
         find(value){
           
@@ -165,15 +220,66 @@
         }
     }
 
-   let rnadomize = (min, max) =>  Math.max(Math.floor(Math.random() * max) + 1, min);
-   let arr = Array.from({length:25},n => rnadomize(1,25))
-   let avg = Math.floor(arr.reduce((acc,n) =>acc+n,0)/arr.length)
-   let bst = new BinarySearchTree(avg)
-   bst.insert(arr)
-   capsulate(bst.render())   
+    let rnadomize = (min, max) =>  Math.max(Math.floor(Math.random() * max) + 1, min);
+    let arr = Array.from({length:40},n => rnadomize(1,40))
+    let avg = Math.floor(arr.reduce((acc,n) =>acc+n,0)/arr.length)
+    let bst = new BinarySearchTree(avg)
+    bst.insert(arr)
+    capsulate(bst.render())   
 
+    //In Order Traverse
+       
+       document.getElementById('inorder_btn').addEventListener('click', ()=>{
 
-   document.getElementById('find').addEventListener('keyup',(e)=>{
+            
+            let traverseDepthFirst_inOrder_output = ''
+            let index=1
+            bst.deactiveAll()
+            bst.traverseDepthFirst_inOrder(node => {
+                node.lazyActive(index)
+                index++
+                traverseDepthFirst_inOrder_output += (`<span class="square">${node.value}</span>`)
+            })
+            if(document.getElementById('view2').innerHTML === '') render('view2','In Order Traverse : ' + traverseDepthFirst_inOrder_output)
+            document.getElementById('view0').innerHTML = `<p>
+                    In-Order traversal is most common
+                    visit left branch, then current node, than right branch
+                    For binary search tree, this visits the nodes in ascending order (hence the name)
+            </p>`
+        })
+    //Pre order traverse
+       document.getElementById('preorder_btn').addEventListener('click', ()=>{
+            let index=1
+            let traverseDepthFirst_preOrder_output = ''
+            bst.deactiveAll()
+            bst.traverseDepthFirst_preOrder(node => {
+                node.lazyActive(index)
+                index++
+                traverseDepthFirst_preOrder_output += (`<span class="square">${node.value}</span>`)
+            })
+            if(document.getElementById('view3').innerHTML === '') render('view3','In preOrder Traverse : ' + traverseDepthFirst_preOrder_output)
+            document.getElementById('view0').innerHTML = `<p>
+                    Pre-Order traversal : visits current node before its child nodes
+            </p>`
+        })
+    //Pre post traverse
+        
+       document.getElementById('post_btn').addEventListener('click', ()=>{
+            let index=1
+            let traverseDepthFirst_postOrder_output = ''
+            bst.deactiveAll()
+            bst.traverseDepthFirst_postOrder(node => {
+                node.lazyActive(index)
+                index++
+                traverseDepthFirst_postOrder_output += (`<span class="square">${node.value}</span>`)
+            })
+            if(document.getElementById('view4').innerHTML === '') render('view4','In postOrder Traverse : ' + traverseDepthFirst_postOrder_output)
+            document.getElementById('view0').innerHTML = `<p>
+                    Post-Order traversal :  visit the current node after its child nodes
+            </p>`
+       })
+
+    document.getElementById('find').addEventListener('keyup',(e)=>{
        e.preventDefault()
         if(e.target.value === ''){
             !!document.querySelectorAll('.cell__title') && document.querySelectorAll('.cell__title').forEach(item => {
@@ -183,7 +289,7 @@
             return false
         }
        !!bst.find(e.target.value) && bst.find(e.target.value).activate()
-   })
+    })
 
 
 
