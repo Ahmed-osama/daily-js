@@ -1,0 +1,80 @@
+<html>
+    <head>
+        <title>palindrome challange</title>
+    </head>
+    <body>
+        <input id="text"type="text" placeholder="test your word">
+        <button id="dispatchTestBtn"> Test</button>
+        <hr>
+        <h1 id="preview"></h1>
+        <script>
+            function checkPalindrome(inputString) {
+                if(inputString.length === 1) return true;
+                numtype = inputString.length%2;
+                length = numtype==0?inputString.length/2:(inputString.length-1)/2
+                addMe =  numtype==0?0:1
+                half_1 = inputString.split("").slice(0,length)
+                half_2 = inputString.split("").slice(length+addMe).reverse()
+                console.log(
+                    numtype,
+                    length,
+                    addMe,
+                    half_1,
+                    half_2
+                )
+                return half_1.join() == half_2.join()
+            }
+            
+            let input = document.querySelector('#text');
+            let btn = document.querySelector('#dispatchTestBtn');
+            let preview = document.querySelector('#preview');
+            btn.addEventListener('click', function(e){
+                console.log(e.target)
+                preview.innerHTML  =  checkPalindrome(input.value)? `your text is plaindrome ;)`:`your text does not fit the palindrome ;(`
+
+            })
+
+            // function solution(arr) {
+            //     // write your code in JavaScript (Node.js 8.9.4)
+            //     debugger
+            //     let jumps=0
+            //     let index =0
+
+                
+            //     do{
+            //         index=  index+arr[index]
+            //         jumps++
+            //     }while(index < arr.length-1 &&  index > 0)
+            //     return jumps
+            // }
+            // console.log(solution([2, 3, -1, 1, 3]) )
+
+
+            // function solution(K, A) {
+            //     // write your code in JavaScript (Node.js 8.9.4)
+            //     console.log(K, A)
+            //     let times = []
+            //     for(let i =0;i<A.length;i++){
+            //         for(let x = A.length -1; x > 0; x-- ){
+            //             if(A[i]+A[x] == 6) times.push([i, x])
+            //         }
+                    
+            //     }
+            //     return times.length
+            // }
+            // console.log(solution(6, [1, 8, -3, 0, 1, 3, -2, 4, 5]) )
+
+            function solution(N) {
+                if(N ===0) return 0
+                if(N ===1) return 1
+                if(N >= 2){
+                let purenum =   solution(N - 1) + solution(N-2)
+                purenum = purenum.toString()
+                let leastsgif = purenum.length > 6?  purenum.substring(purenum.length-6) :purenum
+                return leastsgif
+                }
+            }
+            console.log( solution(8) )
+        </script>
+    </body>
+</html>
