@@ -54,10 +54,18 @@
         }
         find(key){
             let hash = hashFunc(key, this.tableSize);
+           
             this.store[hash] = this.store[hash] || []
             let bucket = this.store[hash]
             let match;
             let matchIndex; 
+
+            bucket.forEach((item, index) => {
+                if(item.hasOwnProperty(key)){
+                    match = item;
+                    matchIndex = index
+                }
+            });
             return {
                 bucket,
                 match,
@@ -65,16 +73,78 @@
             }
         }
         set(key, value){
-            let item ={}
-            item[hashFunc(key, this.tableSize)] = value
-            this.store.push(item)
-            this.count++
+            let match = this.find(key).match
+            let bucket = this.find(key).bucket || []
+            if (match) {
+                match[key] = value;
+            }else{
+
+                let newItem ={}
+                newItem[hashFunc(key, this.tableSize)] = value
+                this.count++
+                bucket.push(newItem)
+                console.log(this)
+            }
             return this
+        }
+        has(key){
+            console.log(this.find(key).match)
+            return !!this.find(key).match
+        }
+        delete(key){
+            let match = this.find(key).match
+            if(match){
+                let bucket = this.find(key).bucket
+                let matchIndex = this.find(key).matchIndex
+                bucket.splice(matchIndex,1)
+                this.count--
+                if (this._count < 0.25*this._size) {
+                    this.resize(0.5*this._size);
+                }
+            }
+            console.log(this.store)
+            return !!match
+        }
+        count(){
+            return this.count
+        }
+        forEach(cb){
+            this.store.forEach(bucket =>{
+                bucket.forEach(item => {
+                    cb(item)
+                })
+            })
+        }
+        resize(newSize){
+            let oldStore = this.store
+            this.size = newSize
+            this.count = 0
+            this.store = []
+            let  that = this
+            oldStore.forEach(bucket=>{
+                bucket.forEach(item=>{
+                    let key  = Object.keys(item)[0]
+                    that.set(key, item[key])
+                })
+            })
+            console.log(this.store)
         }
     }
 
     let mytable = new HashTable(5)
-    mytable.set('lolol', 'osama')
+    mytable.set('khalil', 'osama')
+    mytable.set('khalil', 'Ahmed')
+    mytable.set('khalil', 'Ibrahim')
+    mytable.set('Dndn', 'hameed')
+    mytable.set('Dndn', 'fofo')
+    mytable.set('Dndn', 'nadnad')
+    console.log(mytable.has('khalil'))
+    mytable.resize(7)
+    let all =''
+    mytable.forEach(item=> all+= ' '+JSON.stringify(item))
+    console.log(all)
+    mytable.delete('Dndn')
+    
 </script>
 
 </html>
