@@ -10,23 +10,24 @@
             function rowSumOddNumbers(n) {
                 
                 let numbers=[[1]]
-                let i = 1 
-                while(i<n){
+                let index = 1
+                for(let i = index; i<n ; i++){
                     
                     let arr= []
-                    console.log(numbers[numbers.length-1][numbers[numbers.length-1].length-1]+1, n, arr.length)
+                   
                     for(var x = numbers[numbers.length-1][numbers[numbers.length-1].length-1]+1; arr.length<=n; x++){
-                        console.log(x, n, arr.length)
+                       
                         if(arr.length === numbers[i-1].length +1) break
                         if(x%2>0){
                             arr.push(x)
                         }
                     }
+                    numbers[i-1] = null
                     numbers.push(arr)
-                    i++
+                    index = i
                 }
-                console.log(numbers)
-                return numbers[n-1].reduce((a,b)=>a+b)
+            
+                return numbers.filter(a=>a!==null)[0].reduce((a,b)=>a+b)
             }
 
             console.log(rowSumOddNumbers(2))
