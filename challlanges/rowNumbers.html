@@ -1,0 +1,37 @@
+
+
+<html>
+    <head>
+        <title>row numbers</title>
+    </head>
+    <body>
+       
+        <script>
+            function rowSumOddNumbers(n) {
+                
+                let numbers=[[1]]
+                let i = 1 
+                while(i<n){
+                    
+                    let arr= []
+                    console.log(numbers[numbers.length-1][numbers[numbers.length-1].length-1]+1, n, arr.length)
+                    for(var x = numbers[numbers.length-1][numbers[numbers.length-1].length-1]+1; arr.length<=n; x++){
+                        console.log(x, n, arr.length)
+                        if(arr.length === numbers[i-1].length +1) break
+                        if(x%2>0){
+                            arr.push(x)
+                        }
+                    }
+                    numbers.push(arr)
+                    i++
+                }
+                console.log(numbers)
+                return numbers[n-1].reduce((a,b)=>a+b)
+            }
+
+            console.log(rowSumOddNumbers(2))
+            console.log(rowSumOddNumbers(42))
+
+        </script>
+    </body>
+</html>
