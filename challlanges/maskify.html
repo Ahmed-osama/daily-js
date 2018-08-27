@@ -1,0 +1,25 @@
+
+
+<html>
+    <head>
+        <title>Leet code 2</title>
+    </head>
+    <body>
+       
+        <script>
+            function maskify(cc) {
+                let arr = (cc.toString()).split("")
+                let length = arr.length-4 > 0?arr.length-4:0
+                let rest = arr.splice(length,length+4)
+                let cover = []
+                cover.length = length
+                cover.fill('#')
+                return cover.join("")+rest.join("")
+            }
+
+            console.log(maskify('asdaisudyafag32eqwd'))
+            console.log(maskify('123'))
+
+        </script>
+    </body>
+</html>
