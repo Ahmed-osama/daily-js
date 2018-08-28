@@ -1,0 +1,39 @@
+
+
+<html>
+    <head>
+        <title>title case</title>
+    </head>
+    <body>
+       
+        <script>
+            function titleCase(title, minorWords) {
+                
+                minorWords =minorWords? minorWords.split(" "):[]
+                minorWords.map(w=>w.toLowerCase())
+                title = title.split(" ").map(w => {
+                   
+                    if(minorWords.includes(w.toLowerCase())){
+                       
+                       return  w.toLowerCase()
+                    }else{
+                       
+                       return  w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()
+                    } 
+                })
+                
+                return title.join(" ")
+            }
+            
+
+            console.log(titleCase('a clash of KINGS', 'a an the of'))
+                        
+            console.log(titleCase('THE WIND IN THE WILLOWS', 'The In'))
+
+            console.log(titleCase('the quick brown fox'))
+
+
+
+        </script>
+    </body>
+</html>
