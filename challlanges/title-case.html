@@ -10,13 +10,16 @@
             function titleCase(title, minorWords) {
                 
                 minorWords =minorWords? minorWords.split(" "):[]
-                minorWords.map(w=>w.toLowerCase())
-                title = title.split(" ").map(w => {
+                minorWords = minorWords.map(w=>w.toLowerCase())
+                title = title.split(" ").map((w,i) => {
                    
-                    if(minorWords.includes(w.toLowerCase())){
+                    if(i!==0 && minorWords.includes(w.toLowerCase())){
                        
                        return  w.toLowerCase()
-                    }else{
+                    }
+                    console.log(title.split(" "))
+                    
+                    if(i===0 || !minorWords.includes(w.toLowerCase())){
                        
                        return  w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()
                     } 
