@@ -7,106 +7,13 @@
         
     </head>
     <body>
+        <div id="preview">
 
+        </div>
         <script>
-            "use strict";  
-            function _(msg){
-                console.log(msg)
-            }
-
-           /*
-                STRINGS ARE UTF-16 BASED no tied to page encoding
-           */
-           // SPECIAL CHRACHTERS
-
-            _('this is a multi line string \n ahmed \n osama')
-            _('special long unicode smily face : \u{1F60D}')
-            _('using escape to avoide closing qoute  : i\'m ahmed')
-            _('double back slash \\ to show one back slash')
-
-
-            let name = "ahmed osama";
-            _('name charachter length is : '+name.length)
-            _('lastchar using array method: '+name[name.length-1])
-            _('lastchar using charAt: '+name.charAt(name.length-1))
-            _('if you requested char out of sring using charAt returns : '+name.charAt(1000) + '<= (empty string)')
-            _('if you requested char out of sring using array method returns : '+name[1111] )
-
-            for(let char of name){
-                _(char)
-            }
-
-            // Strings are immutable
-                //name[0] = "o" // error
-            
-
-            //Case CHange
-                _('toUpperCase : '+name.toUpperCase())
-                _('toLowerCase : '+name.toLowerCase())
-                _('select chracter and  perform toUpperCase : '+name[4].toUpperCase())
-
-            /*
-                Searching for a substring
-                str.indexOf(substr, pos).
-                str.lastIndexOf(pos).
-            */
-
-            _(name.indexOf('os') + ' is the index of serach string "os" in "ahmed osama"')
-            _(name.indexOf('os', 6) + ' is the index of serach string "os" in "ahmed osama" after the 6 char')
-            _(name.indexOf('os', 3) + ' is the index of serach string "os" in "ahmed osama" after the 3 char')
-           
-            _(name.lastIndexOf('os') + ' is the reversed index of serach string "os" in "ahmed osama"')
-            _(name.lastIndexOf('os', 6) + ' is the reversed index of serach string "os" in "ahmed osama" after the 6 char')
-            _(name.lastIndexOf('os', 3) + ' is the reversed index of serach string "d o" in "ahmed osama" after the 3 char')
-
-            // ~ bitwize converts the number to 32bit interger and erverses bits in its binary representation
-                _(~1 == -(1+1))
-                _(~2 == -(2+1))
-                _(~7 == -(7+1))
-
-            /*
-                includes, startsWith, endsWith
-            */
-
-                _('name includes osama ? ' + name.includes('osama'));
-                _('name includes xx ? ' + name.includes('xxx'));
-
-                _('name starts with xx ? ' + name.startsWith('xxx'));
-                _('name starts with ahmed ? ' + name.startsWith('ahmed'));
-
-                _('name ends with xx ? ' + name.endsWith('xxx'));
-                _('name ends with ahmed ? ' + name.endsWith('ahmed'));
-                _('name ends with osama ? ' + name.endsWith('osama'));
-            
-            /*
-                GETTING Substring
-                str.slice(index, length)
-            */
-
-                _('get from 2 to 6 : '+name.slice(2,6))
-                _('get from 0 to 1 : '+name.slice(0,1))
-                _('get from 3 to the end : '+name.slice(3))
-            
-            // COMPARING STRINGS
-
-                _(' a > Z is ' + ('a' > "Z") + ' because lower cas is alwayes grater than upper case')
-                _('str.codePointAt(pos) Returns the code for the character at position => ' + name.codePointAt(0) + " codePoint for a")
-                _('String.fromCodePoint(70) is : ' + String.fromCodePoint(70))
-            
-            /*
-                The call str.localeCompare(str2):
-                    Returns 1 if str is greater than str2 according to the language rules.
-                    Returns -1 if str is less than str2.
-                    Returns 0 if they are equal.
-            */
-                _( ' ahmed is less than osama '+ "ahmed".localeCompare("osama") )
-                _( ' osama is grater than ahmed '+ "osama".localeCompare("ahmed") )
-            
-               _("( ahmed ) with trim is " + (' ahmed '.trim())) 
-               _("repeat name 5 times " + name.repeat(5)) 
-
-
-
+             x = "AHMED"
+             y = "OSAMA"
+            document.querySelector('#preview').innerHTML =` ${x + y}`
         </script>
     </body>
 </html>
