@@ -1,1 +1,2 @@
-require('./greet')
+greet = require('./greet')
+greet()
