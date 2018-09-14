@@ -1,21 +1,15 @@
+/*
+Dont imitate -> Understand
+big words and node js
+    CLI => utitlity or program when you type command rather than click with mouse 
+        bash:linux
+        terminal:mac
+        command Prompt : windows
+        powerShell : have terminal & bash commands 
 
-
-<html>
-    <head>
-        <title>title case</title>
-    </head>
-    <body>
-        <div id="view">
-            here i'm
-        </div>
-       <input type="checkbox" id="input">
-       <div id="observerLog">
-
-       </div>
-        <script>
-           let address = 'Egypt, Cairo, 993'
-            let {0:zone,1:area,2:street}= address.split(',')
-           console.log(typeof address)
-        </script>
-    </body>
-</html>
+    Argumnets
+        values you give to a programe that affects how it runs
+    
+Aside
+    CLI
+*/
