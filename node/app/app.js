@@ -13,7 +13,7 @@ object and object litrels:
 IIFE : immediatly invoked function expression
 scope : where in code you have acess to a virable
 json : js object notation , a standered for structuuring data thats inspired by javascript object literals
-
+mutate : is to change
 revealing module pattern : exposesing only the properties and  methods  you wanted via a returned object
 - in node your code is alwayes wraped inside a dunction
 that passes in 5 prams dirname, file name , require, exports, module
