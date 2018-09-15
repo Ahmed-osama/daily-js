@@ -18,12 +18,9 @@ in node your code is alwayes wraped inside a dunction
 that passes in 5 prams dirname, file name , require, exports, module
 and it alwayes returns export
 */
-var name = 'john';
-(function(){
-    var name = 'jane';
-    console.log(name)
-}())
-console.log(name)
-console.log(__dirname)
-console.log(__filename)
-console.log(exports)
+
+var greet = require('./greet/');
+let {english,spanish } = greet;
+
+english();
+spanish();
