@@ -1,14 +1,17 @@
-var obj ={
-    greet:'hello'
+var Emitter = require('events');
+var eventConfig = require('./config').events
+var emtr = new Emitter()
+let person = {
+    name : 'ahmed',
+    greet(){
+        console.log(`good work ${this.name}`)
+    }
 }
-var prop = 'greet'
-console.log(obj[prop])
-
-//Array
-var arr = []
-arr.push(()=> console.log('hellow world 1'))
-arr.push(()=> console.log('hellow world 2'))
-arr.push(()=> console.log('hellow world 3'))
-
-arr.forEach(i=> i())
-
+let person2 = {
+    name : 'osama',
+   
+}
+emtr.on(eventConfig.GREET,()=>console.log('greetings'))
+emtr.on(eventConfig.GREET,()=>console.log('that was agreet'))
+emtr.on(eventConfig.GREET,person.greet.bind(person2))
+emtr.emit(eventConfig.GREET)
