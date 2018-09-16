@@ -1,34 +1,14 @@
 /*
-    Event : is something that happned in our app that we can respond to
-    system Events => c++ core => libuv
-    custom events => js core => event emitter
-    system events are wraped inside js module so it generates js events
-    so js side is faking it 
+    asynchronous: more than one process running simultaneously
 
-    Event listener : a code that responds to an event
-    magic string : string have special meaning in our code
-    Object.creat
+    synchronous : one process executing at a time
 
-    util.inherites : creates shared prototype object between 2 objects
-    template literals : a  way to concatenate strings in javascript
+    call back : a function we pass to other function which it will be assumed to be invoked inside the main function
 
-    syntactic sugar : a feature that only changes how you type some thing
-        but nothing changes under the hood
-    
-    class in javascript are syntactic sugar for prototypal inheritnce
+    none blocking : doing other things w/o stopping your programme from running
+    -------------------------
+
+    systemEvents : c++ core -> libuv : deals with things happning in lower level
+    libuv : has a queue [ , , , ,] and the event loop
+
 */
-
-let person = {
-    firstName : '',
-    lastName : '',
-    greet(){
-        return this.firstName + ' ' + this.lastName
-    }
-}
-
-
-let john =Object.create(person)
-john.firstName ='john',
-john.lastName ='snow'
-    
-console.log(john.greet())
