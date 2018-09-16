@@ -1,15 +1,21 @@
+let Emmiter = require('events');
 'use strict';
-class Person{
+console.log(Emmiter)
+class Person extends Emmiter{
     constructor(firstName, lastName){
+        super()
         this.firstName = firstName;
         this.lastName = lastName;
     }
-    greet(){
+    greet(data){
         console.log(`hello ${this.firstName} ${this.lastName}`)
+        this.emit('greet', data)
     }
 }
 
 var john  = new Person('john', 'snow');
-john.greet();
+john.on('greet', data => `john was greted ${data}`)
+john.greet('awawaw');
+
 var sansa  = new Person('sansa', 'stark')
 sansa.greet();
