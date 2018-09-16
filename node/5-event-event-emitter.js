@@ -10,6 +10,12 @@
     Object.creat
 
     util.inherites : creates shared prototype object between 2 objects
+    template literals : a  way to concatenate strings in javascript
+
+    syntactic sugar : a feature that only changes how you type some thing
+        but nothing changes under the hood
+    
+    class in javascript are syntactic sugar for prototypal inheritnce
 */
 
 let person = {

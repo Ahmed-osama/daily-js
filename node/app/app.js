@@ -1,27 +1,15 @@
-var Emitter = require('events');
-var eventConfig = require('./config').events
-var emtr = new Emitter();
-var util = require('util');
-
-class Person {
-    constructor(name){
-        this.name = name
-        
-        
+'use strict';
+class Person{
+    constructor(firstName, lastName){
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
     greet(){
-        this.emit('greet')
-        console.log(`good work ${this.name}`)
+        console.log(`hello ${this.firstName} ${this.lastName}`)
     }
-    
-
 }
-let person =  new Person('ahmed')
-let person2 = new Person('osama')
 
-util.inherits(Person,Emitter)
-// emtr.on(eventConfig.GREET,()=>console.log('greetings'))
-// emtr.on(eventConfig.GREET,()=>console.log('that was agreet'))
-// emtr.on(eventConfig.GREET,person.greet.bind(person2))
-// emtr.emit(eventConfig.GREET)
-person2.emit(eventConfig.GREET)
+var john  = new Person('john', 'snow');
+john.greet();
+var sansa  = new Person('sansa', 'stark')
+sansa.greet();
