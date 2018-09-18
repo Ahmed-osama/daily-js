@@ -28,20 +28,16 @@
 
     es6 typed arrays : 
     callback : a function passed to other function which we assume will be invoked at some point
-
+    STREAM : ASEQUNCE OF PICES OF DATA
+    CHUNK : A PICE OF DATA BEING SENT THROUGH STRAME
+    abstract (base) class : a type of constructor you never work directly with but inherit from
+    Pipe : conection 2 streams by writing to one stream what is being read from another
+    method chaining : that happens when a method of object returns an object
     -------------------------
 
     systemEvents : c++ core -> libuv : deals with things happning in lower level
     libuv : has a queue [ , , , ,] and the event loop
-
+    err 1st callback : a call back that take an error as the first parameter
 */
 // var buff = new Buffer('hello')
 // console.log(buff.toJSON())
-
-var buffer = new ArrayBuffer(8) // 64 bits of data
-var view = new Int16Array(buffer)
-function greet(cb){
-    console.log("hello")
-    cb()
-}
-greet(console.log.bind(null, "cb cons"))
