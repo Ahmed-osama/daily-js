@@ -24,6 +24,10 @@
                                 utf-8
         has 8 digits to represent the number in binary
     character encoding : how character are sotred in binary
+    byte : 8 bits 10101100
+
+    es6 typed arrays : 
+    callback : a function passed to other function which we assume will be invoked at some point
 
     -------------------------
 
@@ -31,3 +35,13 @@
     libuv : has a queue [ , , , ,] and the event loop
 
 */
+// var buff = new Buffer('hello')
+// console.log(buff.toJSON())
+
+var buffer = new ArrayBuffer(8) // 64 bits of data
+var view = new Int16Array(buffer)
+function greet(cb){
+    console.log("hello")
+    cb()
+}
+greet(console.log.bind(null, "cb cons"))
