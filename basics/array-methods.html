@@ -7,7 +7,7 @@
         
     </head>
     <body>
-
+        <input type="text" id="userinput">
         <script>
             "use strict";  
             function _(msg){
@@ -47,10 +47,27 @@
            _('arr includes "xx" '+arr.includes('xx'))
 
 
-           //Searching array
+        
+            let names = ['saadny', 'ahmed', 'osama', 'fawzy']
            
+            userinput.addEventListener('change',function(e){
+                console.log(e.target.value)
+                let filteredNames = names.filter(item=> item.includes(e.target.value));
+                console.log(filteredNames)
+            } )
+    //     function execute(number1, number2, operation){
+    //         let result = operation(number1, number2)
+    //         return result
+    //     }
+    //     let add = (a,b) => a + b
+    //     let multibly = (a,b) => a*b
+    //     let subtract = (a,b) => a-b
+    //     let devide = (a,b) => a/b
 
-
+    //    console.log(execute(2,4,add)) 
+    //    console.log(execute(2,4,multibly)) 
+    //    console.log(execute(2,4,subtract)) 
+    //    console.log(execute(2,4,devide)) 
 
         </script>
     </body>
