@@ -1,8 +1,8 @@
 
-var fs = require('fs')
-let greet = fs.readFileSync(__dirname + '/greet.txt', 'utf8')
-console.log(greet)
-let greet2 = fs.readFileSync(__dirname + '/greet.txt','utf8', function(err , data){
-    console.log(data)
-})
-console.log('done')
+let http  = require('http');
+http.createServer(function(req, res){
+    res.writeHead(200, {
+        'content-type':'text/plain'
+    })
+    res.end('Hello my 1st server')
+}).listen(1337,'127.0.0.1')
