@@ -26,6 +26,8 @@
     Serialize : translate an object into a format that can be stored or transfered
 
     deSerialize : is to convert data()serialized back into object
+
+    Routing ; Mapping the http requests to content, whather actual files that exists on the server or not
     -------------------------
     browser & server  both have ip and opens socket
         http:for web

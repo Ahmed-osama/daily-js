@@ -37,18 +37,19 @@
             
        </div>
         <script>
-            const USERS_URL = `http://127.0.0.1:4000/`
+            const USERS_URL = `http://127.0.0.1:4000/govern`
             let template = (props) => `
                 <div class="usr">
                     <div class="usr__content">
-                        <h2 class="usr__name">${props}</h2>
+                        <h2 class="usr__name">${props.name}</h2>
                     </div>
                 </div>
             `
             let view = document.getElementById('view')
             fetch(USERS_URL).then(res => {
-                
-                return res.json();
+                let data = res.json()
+                console.log(data)
+                return data;
                 
             }).then(data => {
                 let result =""
