@@ -39,17 +39,15 @@
         <script>
             const USERS_URL = `http://127.0.0.1:4000/`
             let template = (props) => `
-            <div class="usr">
-                   
+                <div class="usr">
                     <div class="usr__content">
-
                         <h2 class="usr__name">${props}</h2>
-                     
                     </div>
-            </div>
+                </div>
             `
             let view = document.getElementById('view')
             fetch(USERS_URL).then(res => {
+                
                 return res.json();
                 
             }).then(data => {
@@ -58,8 +56,6 @@
                     result += template(item)
                     view.innerHTML = result
                 })
-              
-
             })
             
         </script>
