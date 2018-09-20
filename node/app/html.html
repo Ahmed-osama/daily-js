@@ -1,12 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>i have come from server saaaaide</title>
-</head>
-<body>
-    <h1>Hello from the server side! {name}</h1>
-</body>
+<html>
+    <head>
+        <title>object to premtive</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <meta charset="UTF-8">
+        <style>
+            .usr{
+                display: block;
+                padding: 20px;
+                border-bottom: 1px solid #DFDFDF;
+                overflow: hidden;
+                display: flex;
+            }
+            .usr__img{
+                display: block;
+                width: 60px;
+                height: 60px;
+                flex-basis: 60px;
+                margin-right: 10px;
+                background: #DFDFDF;
+            }
+            .usr__name{
+                display: block;
+                font-weight: bold;
+                flex-basis: 100%;
+                margin: 0 0 10px 0;
+            }
+            .usr__link{
+                display: block;
+                flex-basis: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container" id="view">
+           
+            
+       </div>
+        <script>
+            const USERS_URL = `http://127.0.0.1:4000/`
+            let template = (props) => `
+            <div class="usr">
+                   
+                    <div class="usr__content">
+
+                        <h2 class="usr__name">${props}</h2>
+                     
+                    </div>
+            </div>
+            `
+            let view = document.getElementById('view')
+            fetch(USERS_URL).then(res => {
+                return res.json();
+                
+            }).then(data => {
+                let result =""
+                data.forEach((item)=>{
+                    result += template(item)
+                    view.innerHTML = result
+                })
+              
+
+            })
+            
+        </script>
+    </body>
 </html>
