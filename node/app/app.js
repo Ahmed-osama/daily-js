@@ -3,8 +3,10 @@ let http  = require('http');
 let fs = require('fs');
 http.createServer(function(req, res){
     res.writeHead(200, {
-        'content-type':'text/json'
+        'content-type':'text/html'
     })
-    let jsonFile = fs.readFileSync(__dirname + '/data.json')
-    res.end(jsonFile)
-}).listen(1337,'127.0.0.1')
+    let myFile = fs.readFileSync(__dirname + '/html.html', 'utf8')
+    let name ="Ahmed"
+    myFile.replace('{name}', name)
+    res.end(myFile)
+}).listen(4000,'127.0.0.1')
