@@ -6,4 +6,15 @@
         ex : [get, post, delet].. also called verbs.
     
     middle ware : is code that sits between to layers of software
+
+    static files : the files that wont be processed like [css, img, fonts]
+
+    rest : an architectural style for building apis
+        stands for 'representational state transfer' we decide that HTTP verbs
+        and URL meands something
+        - follow good url structure
+        - deal with http verbs
+
+    x   x
+
 */
