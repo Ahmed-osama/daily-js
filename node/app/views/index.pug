@@ -8,5 +8,36 @@ html(lang="en")
         link(rel="stylesheet", href="/assets/style.css")
     body
         h1 hello world
-        h2 #{id}
-        h3 #{name}
+        h2 #{params.id}
+        h3 #{params.name}
+        if(query.age)
+            h3 #{query.age}
+
+        form(method="post" action="/person")
+            input(type="text" name="firstName")
+            input(type="text" name="lastName")
+            input(type="submit" value="submit")
+
+        form(id="jsonform" method="post" action="/personJson")
+            input(type="text" name="jsonform__firstName")
+            input(type="text" name="jsonform__lastName")
+            input(type="submit" value="submit")
+        script.
+            jsonform.addEventListener('submit',function(e){
+                e.preventDefault()
+                let firstName = document.getElementsByName('jsonform__firstName')[0].value
+                let lastName = document.getElementsByName('jsonform__lastName')[0].value
+                
+                fetch('/personJson', {
+                    method: 'POST', // or 'PUT'
+                    body: JSON.stringify({
+                        firstName,
+                        lastName
+                    }),
+                    headers: {
+                        "Content-Type": "text/plain"
+                    }
+                })
+                .then(res => res.json())
+                .then(x=> console.log(x))
+            })
