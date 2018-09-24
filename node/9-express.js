@@ -5,5 +5,5 @@
     HTTP METHOD : specifies the type of action the request wishes to make
         ex : [get, post, delet].. also called verbs.
     
-    
+    middle ware : is code that sits between to layers of software
 */
