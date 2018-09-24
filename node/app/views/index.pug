@@ -22,7 +22,7 @@ html(lang="en")
             input(type="text" name="jsonform__firstName")
             input(type="text" name="jsonform__lastName")
             input(type="submit" value="submit")
-        script.
+        //-script.
             jsonform.addEventListener('submit',function(e){
                 e.preventDefault()
                 let firstName = document.getElementsByName('jsonform__firstName')[0].value

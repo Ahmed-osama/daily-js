@@ -12,10 +12,6 @@ app.get('/:id/:name', function(req, res){
         query:req.query
     })
 })
-app.post('/person',urlencodedParser, function(req, res){
-    res.send('posted person thank you ' + req.body.firstName + ' ' + req.body.lastName)
-    console.log(req.body)
-})
 
 app.get('/api', function(req, res){
     res.send(`
@@ -25,7 +21,7 @@ app.get('/api', function(req, res){
         }
     `)
 })
-app.post('/personJson', jsonParser, function(req, res){
+app.post('/api/person', jsonParser, function(req, res){
     console.log(req.body)
     res.send(JSON.stringify(req.body))
 })
