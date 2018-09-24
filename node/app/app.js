@@ -1,23 +1,22 @@
-
-let http  = require('http');
-let fs = require('fs');
-http.createServer(function(req, res){
-    if(req.url === '/govern'){
-
-        res.writeHead(200, {
-            'content-type':'application/json'
-        })
-        fs.createReadStream(__dirname + '/data.json', 'utf8').pipe(res)
-    }else if(req.url === '/'){
-        res.writeHead(200, {
-            'content-type':'text/html'
-        })
-        fs.createReadStream(__dirname + '/html.html', 'utf8').pipe(res)
-    }else{
-
-        res.writeHead(404)
-        res.end('worng page ya noty')
-    }
-
-   
-}).listen(4000,'127.0.0.1')
+const express = require('express');
+const app = express();
+const port = process.env.PORT || 3000;
+    app.get('/:id/:name', function(req, res){
+        res.send(`
+            <html>
+                <body>
+                    <h1>${req.params.id || 'home page w/o ids'}</h1>
+                    <h2>${req.params.name}</h2>
+                </body>
+            </html>
+        `)
+    })
+    app.get('/api', function(req, res){
+        res.send(`
+           {
+               "name":"ahemed osama",
+               "age":28
+           }
+        `)
+    })
+app.listen(port);
