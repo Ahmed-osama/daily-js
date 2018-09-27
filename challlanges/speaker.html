@@ -1,0 +1,59 @@
+
+<html>
+    <head>
+        <title>title case</title>
+    </head>
+    <body>
+       <div id="view"></div>
+        <script>
+            // function textToSpeech(){
+            //     var scriptTag = document.createElement('script')
+            //     var inputElement = document.createElement('input');
+            //     inputElement.setAttribute("placeholder","write text to speech");
+            //     scriptTag.setAttribute("src","http://code.responsivevoice.org/responsivevoice.js")
+                
+            //     inputElement.style.cssText = "color: blue; width: 100%; height: 55px; border: 1px solid red; font-size: 22px; background-color: #ff9800; ;padding: 20px;ß margin = auto";
+            //     document.body.appendChild(inputElement);
+            //     document.body.appendChild(scriptTag)
+            //     return addEventListener("change",function(){
+                    
+            //         setTimeout(responsiveVoice.speak(inputElement.value),9000);
+            //     })
+            // }
+            
+            class Speaker {
+                
+                constructor({scriptTag, inputElement,container}){
+                    
+                    this.scriptTag = scriptTag
+                    this.inputElement = inputElement
+                    this.container = document.body
+                }
+                init(){
+                    
+                    // var scriptTag = document.createElement('script')
+                    // var inputElement = document.createElement('input');
+                    this.inputElement.setAttribute("placeholder","write text to speech");
+                    this.scriptTag.setAttribute("src","http://code.responsivevoice.org/responsivevoice.js")
+                    
+                    this.inputElement.style.cssText = "color: blue; width: 100%; height: 55px; border: 1px solid red; font-size: 22px; background-color: #ff9800; ;padding: 20px;ß margin = auto";
+                    this.container.appendChild(this.inputElement);
+                    this.container.appendChild(this.scriptTag)
+
+                    this.inputElement.addEventListener("change",this.talk.bind(this))
+                }
+                talk(){
+                    
+                    console.log(this, this.inputElement.value)
+                 responsiveVoice.speak(this.inputElement.value)
+                }
+            }
+
+            let speaker = new Speaker({
+                scriptTag : document.createElement('script'),
+                inputElement:  document.createElement('input')
+            })
+           speaker.init()
+        </script>
+    </body>
+</html>
