@@ -1,0 +1,64 @@
+
+
+<html>
+    <head>
+        <title>title case</title>
+    </head>
+    <body>
+        <p>price : <input id="price" value="7800" type="text"></p>
+        <p>size : <input id="size" value="130" type="text"></p>
+        <button id="calc">calculate</button>
+        <hr>
+        <table id="output" style="width:700px" border="1" cellpadding="10" cellspacing=0>
+            
+        </table>
+        <script>
+            let calc = document.getElementById('calc');
+            let price = document.getElementById('price');
+            let size = document.getElementById('size');
+            let output = document.getElementById('output');
+            function render(result){
+                output.innerHTML = result
+            }
+            let  tr = (t,n,s=false) => {
+                s = s? `<td> ${(s)} </td>`:''
+                return  `<tr>
+                <td>${t}</td>
+                 <td colspan="${s?2:1}"> ${!isNaN(n)?Math.round(n):n} </td> 
+                 ${s}      
+                </tr>`
+            }
+            function calculation(price, size){
+                console.log(price, size)
+                let result = ''
+                let totalUnitPrice = price*size
+                result += tr(`total price for the unite`,totalUnitPrice)
+                let acc  = 100000
+                result += tr(`reservation`,acc)
+
+                acc  += totalUnitPrice*0.165 - acc
+                result += tr(`if you win complete payment to 16.5%`,totalUnitPrice*0.165,acc)
+                
+                acc  += totalUnitPrice*0.1
+                result += tr(`after 6 monthes`,totalUnitPrice*0.1,acc)
+
+                acc  += totalUnitPrice*0.15
+                result += tr(`on delivery`,totalUnitPrice*0.15,acc)
+                result += tr(`the rest`,totalUnitPrice-acc)
+
+              
+                result += tr(`you will pay evey 3 monthes for 3 years`,`${Math.round((totalUnitPrice - acc)/3/4)} <br> Monthly  : ${Math.round((totalUnitPrice - acc)/3/4/3)}`)
+                result += tr(`you will pay evey 3 monthes for 5 years`,`${Math.round((totalUnitPrice - acc)/5/4)} <br> + interset 19%  : ${Math.round(((totalUnitPrice - acc)/5/4)*0.19)}  <br> Monthly  : ${Math.round(((totalUnitPrice - acc)/5/4)*1.19/3)}`)
+                result += tr(`you will pay evey 3 monthes for 7 years`,`${Math.round((totalUnitPrice - acc)/7/4)} <br> + interset 19%  : ${Math.round(((totalUnitPrice - acc)/7/4)*0.19)}  <br> Monthly  : ${Math.round(((totalUnitPrice - acc)/7/4)*1.19/3)}`)
+                
+                
+                render(result)
+
+            }
+            //calculation( price.value, size.value)
+            calc.addEventListener('click', ()=> {calculation( price.value, size.value)})
+
+
+        </script>
+    </body>
+</html>
