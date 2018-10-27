@@ -1,0 +1,81 @@
+<html>
+
+<head>
+    <title>title case</title>
+</head>
+<style>
+    .usr {
+        display: block;
+        padding: 20px;
+        border-bottom: 1px solid #DFDFDF;
+        overflow: hidden;
+        display: flex;
+    }
+
+    .usr__img {
+        display: block;
+        width: 60px;
+        height: 60px;
+        flex-basis: 60px;
+        margin-right: 10px;
+        background: #DFDFDF;
+    }
+
+    .usr__name {
+        display: block;
+        font-weight: bold;
+        flex-basis: 100%;
+        margin: 0 0 10px 0;
+    }
+
+    .usr__meta {
+        display: block;
+        font-weight: 300;
+        flex-basis: 100%;
+        margin: 0 0 10px 0;
+    }
+
+    .usr__link {
+        display: block;
+        flex-basis: 100%;
+    }
+</style>
+
+<body>
+
+    <table id="output">
+
+    </table>
+    <script>
+        const ENDPOINT = 'http://localhost:3000/'
+        const USERS = {}
+        let output = document.getElementById('output');
+        function render(result) {
+            output.innerHTML = result
+        }
+        let template = (props) => `
+            <div class="usr">
+                    <img src="${props.image}" alt="" class="usr__img">
+                    <div class="usr__content">
+
+                        <h2 class="usr__name">${props.name}</h2>
+                        <h3 class="usr__meta">${props.jobTitle}</h3>
+                        <a href="${props.email}" class="usr__link"> ${props.email}</a>
+                    </div>
+            </div>
+        `
+        fetch(ENDPOINT + 'users')
+            .then(data => data.json())
+            .then(data => {
+                console.log(data)
+                render(data.reduce((a, b) => {
+                    return a += template(b)
+                }, ""))
+            })
+
+
+
+    </script>
+</body>
+
+</html>
