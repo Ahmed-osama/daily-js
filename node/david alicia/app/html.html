@@ -1,0 +1,64 @@
+<html>
+    <head>
+        <title>object to premtive</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <meta charset="UTF-8">
+        <style>
+            .usr{
+                display: block;
+                padding: 20px;
+                border-bottom: 1px solid #DFDFDF;
+                overflow: hidden;
+                display: flex;
+            }
+            .usr__img{
+                display: block;
+                width: 60px;
+                height: 60px;
+                flex-basis: 60px;
+                margin-right: 10px;
+                background: #DFDFDF;
+            }
+            .usr__name{
+                display: block;
+                font-weight: bold;
+                flex-basis: 100%;
+                margin: 0 0 10px 0;
+            }
+            .usr__link{
+                display: block;
+                flex-basis: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container" id="view">
+           
+            
+       </div>
+        <script>
+            const USERS_URL = `http://127.0.0.1:4000/govern`
+            let template = (props) => `
+                <div class="usr">
+                    <div class="usr__content">
+                        <h2 class="usr__name">${props.name}</h2>
+                    </div>
+                </div>
+            `
+            let view = document.getElementById('view')
+            fetch(USERS_URL).then(res => {
+                let data = res.json()
+                console.log(data)
+                return data;
+                
+            }).then(data => {
+                let result =""
+                data.forEach((item)=>{
+                    result += template(item)
+                    view.innerHTML = result
+                })
+            })
+            
+        </script>
+    </body>
+</html>

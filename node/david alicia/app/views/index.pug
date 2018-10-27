@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        title Document
+        link(rel="stylesheet", href="/assets/style.css")
+    body
+        h1 hello world
+        h2 #{params.id}
+        h3 #{params.name}
+        if(query.age)
+            h3 #{query.age}
+
+        form(method="post" action="/person")
+            input(type="text" name="firstName")
+            input(type="text" name="lastName")
+            input(type="submit" value="submit")
+
+        form(id="jsonform" method="post" action="/personJson")
+            input(type="text" name="jsonform__firstName")
+            input(type="text" name="jsonform__lastName")
+            input(type="submit" value="submit")
+        //-script.
+            jsonform.addEventListener('submit',function(e){
+                e.preventDefault()
+                let firstName = document.getElementsByName('jsonform__firstName')[0].value
+                let lastName = document.getElementsByName('jsonform__lastName')[0].value
+                
+                fetch('/personJson', {
+                    method: 'POST', // or 'PUT'
+                    body: JSON.stringify({
+                        firstName,
+                        lastName
+                    }),
+                    headers: {
+                        "Content-Type": "text/plain"
+                    }
+                })
+                .then(res => res.json())
+                .then(x=> console.log(x))
+            })

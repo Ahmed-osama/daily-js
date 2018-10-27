@@ -1,0 +1,30 @@
+{
+  "name": "js-play-ground",
+  "version": "1.0.0",
+  "description": "here is where i learn js and new techniques , a way to track my progress",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "json-server --watch ./json-server/db.js "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ahmed-osama/daily-js.git"
+  },
+  "author": "ahmed-osama",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ahmed-osama/daily-js/issues"
+  },
+  "homepage": "https://github.com/Ahmed-osama/daily-js#readme",
+  "dependencies": {
+    "faker": "^4.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.8.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.11.1"
+  }
+}
