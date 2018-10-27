@@ -23,4 +23,3 @@ console.log( getCharFromNumberString2('65 '))
 console.log('assert getCharFromNumberString : ', getCharFromNumberString('65 ') === getCharFromNumberString2('65 '))
 
 // 2 - Refactor imperative code to a single composed expression using Box
-cons applyDiscount = 
