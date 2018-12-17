@@ -1,74 +1,92 @@
-
 <html>
-    <head>
-        <title>Numbers</title>
-        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
-        <meta charset="UTF-8">
-        
-    </head>
-    <body>
-        <input type="text" id="userinput">
-        <script>
-            "use strict";  
-            function _(msg){
-                console.log(msg)
-            }
 
-           let arr = ['native1', 'native2', 'native3'];
+<head>
+    <title>Numbers</title>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+    <meta charset="UTF-8">
 
-           _(arr)
-           arr.push('pushed1') // adds items to the end
-           _('pushed "pushed1" to arr :  [' + arr+']')
-           arr.pop() // extracts an item from the end
-           _('pop from arr end :  [' +arr+']')
-           arr.shift() // extracts an item from the beginning
-           _('shift from the begning : [' +arr+']')
-           arr.unshift('unshifted item') // extracts an item from the beginning
-           _('unshift ads tem to first : [' +arr+'] and length is '+arr.length)
-           
-           delete arr[2]; // delete removes value and keep holes in arr
-           _('deleted 2nd item : [' +arr+ '] and length still '+arr.length)
-           arr.splice(2,1)
-           _('deleted 3rd item using splice : [' +arr+ '] and length now is '+arr.length)
-           
-           arr.splice(1,0, 'inject by splice')
-           _('injected  2d item using splice : [' +arr+ '] and length now is '+arr.length)
-           
-           
-           arr.splice(1,0, 'inject by splice')
-           _('injected  2d item using splice : [' +arr+ '] and length now is '+arr.length)
-           
-           let arr2 = ['arr2Item1', 'arr2Item2']
-           arr.concat(arr2)
-           _('concate arr & arr2 : ' + arr )
+</head>
 
-           _('indexOf "native2" is  '+arr.indexOf('native2'))
-           _('arr includes "native2" '+arr.includes('native2'))
-           _('arr includes "xx" '+arr.includes('xx'))
+<body>
+    <input type="text" id="userinput">
+    <script>
+        "use strict";
+        function _(msg) {
+            console.log(msg)
+        }
+
+        let arr = ['native1', 'native2', 'native3'];
+
+        _(arr)
+        arr.push('pushed1') // adds items to the end
+        _('pushed "pushed1" to arr :  [' + arr + ']')
+        arr.pop() // extracts an item from the end
+        _('pop from arr end :  [' + arr + ']')
+        arr.shift() // extracts an item from the beginning
+        _('shift from the begning : [' + arr + ']')
+        arr.unshift('unshifted item') // extracts an item from the beginning
+        _('unshift ads tem to first : [' + arr + '] and length is ' + arr.length)
+
+        delete arr[2]; // delete removes value and keep holes in arr
+        _('deleted 2nd item : [' + arr + '] and length still ' + arr.length)
+        arr.splice(2, 1)
+        _('deleted 3rd item using splice : [' + arr + '] and length now is ' + arr.length)
+
+        arr.splice(1, 0, 'inject by splice')
+        _('injected  2d item using splice : [' + arr + '] and length now is ' + arr.length)
 
 
-        
-            let names = ['saadny', 'ahmed', 'osama', 'fawzy']
-           
-            userinput.addEventListener('change',function(e){
-                console.log(e.target.value)
-                let filteredNames = names.filter(item=> item.includes(e.target.value));
-                console.log(filteredNames)
-            } )
-    //     function execute(number1, number2, operation){
-    //         let result = operation(number1, number2)
-    //         return result
-    //     }
-    //     let add = (a,b) => a + b
-    //     let multibly = (a,b) => a*b
-    //     let subtract = (a,b) => a-b
-    //     let devide = (a,b) => a/b
+        arr.splice(1, 0, 'inject by splice')
+        _('injected  2d item using splice : [' + arr + '] and length now is ' + arr.length)
 
-    //    console.log(execute(2,4,add)) 
-    //    console.log(execute(2,4,multibly)) 
-    //    console.log(execute(2,4,subtract)) 
-    //    console.log(execute(2,4,devide)) 
+        let arr2 = ['arr2Item1', 'arr2Item2']
+        arr.concat(arr2)
+        _('concate arr & arr2 : ' + arr)
 
-        </script>
-    </body>
+        _('indexOf "native2" is  ' + arr.indexOf('native2'))
+        _('arr includes "native2" ' + arr.includes('native2'))
+        _('arr includes "xx" ' + arr.includes('xx'))
+
+
+
+        let names = ['saadny', 'ahmed', 'osama', 'fawzy']
+
+        userinput.addEventListener('change', function (e) {
+            console.log(e.target.value)
+            let filteredNames = names.filter(item => item.includes(e.target.value));
+            console.log(filteredNames)
+        })
+        //     function execute(number1, number2, operation){
+        //         let result = operation(number1, number2)
+        //         return result
+        //     }
+        //     let add = (a,b) => a + b
+        //     let multibly = (a,b) => a*b
+        //     let subtract = (a,b) => a-b
+        //     let devide = (a,b) => a/b
+
+        //    console.log(execute(2,4,add)) 
+        //    console.log(execute(2,4,multibly)) 
+        //    console.log(execute(2,4,subtract)) 
+        //    console.log(execute(2,4,devide)) 
+        const createCar = (name, id) => ({
+            name,
+            id,
+        })
+        let cars = [
+            createCar('bmw', 1),
+            createCar('volksvagn', 2),
+            createCar('fiat', 3),
+            createCar('audi', 4),
+        ]
+
+        function paginate(arr, page, length) {
+            return [...arr].splice(page, length)
+        }
+
+        console.log(paginate(cars, 2, 2))
+
+    </script>
+</body>
+
 </html>
