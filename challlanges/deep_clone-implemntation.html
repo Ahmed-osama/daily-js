@@ -12,6 +12,7 @@
       details: {
         age: 28,
         children: ["7maza", "7maza"],
+        getChildren: () => this.children.length,
         family: {
           bros: 2,
           parents: {
@@ -21,14 +22,17 @@
 
       }
     }
-
+    function isFunction(functionToCheck) {
+      return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
+    }
     function isPrimitive(test) {
       return (test !== Object(test));
     };
 
+
     function createNewRef(obj) {
       let newObbj;
-      if (isPrimitive(obj)) {
+      if (isPrimitive(obj) || isFunction(obj)) {
         return obj
       } else if (Array.isArray(obj)) {
         newObbj = [...obj]
@@ -41,26 +45,27 @@
           if (!isPrimitive(newObbj[key])) {
             newObbj[key] = createNewRef(newObbj[key])
           }
+
         }
       }
       return newObbj
     }
+    test = createNewRef(obj)
+    // let newData;
+    // fetch('https://jsonplaceholder.typicode.com/users')
+    //   .then(res => res.json())
+    //   .then(data => {
 
-    let newData;
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then(res => res.json())
-      .then(data => {
-
-        performance.mark("createNewRef-start");
-        newData = [...createNewRef(data)]
-        performance.mark("createNewRef-end");
-        performance.measure(
-          "createNewRef",
-          "createNewRef-start",
-          "createNewRef-end"
-        );
-        console.log('newData => ', performance.getEntriesByName("createNewRef")[0].duration / data.length)
-      })
+    //     performance.mark("createNewRef-start");
+    //     newData = [...createNewRef(data)]
+    //     performance.mark("createNewRef-end");
+    //     performance.measure(
+    //       "createNewRef",
+    //       "createNewRef-start",
+    //       "createNewRef-end"
+    //     );
+    //     console.log('newData => ', performance.getEntriesByName("createNewRef")[0].duration / data.length)
+    //   })
 
     // performance.mark("jsonparse-start");
     // test2 = JSON.parse(JSON.stringify(obj))
