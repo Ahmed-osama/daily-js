@@ -1,0 +1,55 @@
+<html>
+
+<head>
+  <title>title case</title>
+</head>
+
+<body>
+
+  <script>
+    let obj = {
+      name: 'ahmed',
+      details: {
+        age: 28,
+        children: ["7maza", "7maza"],
+        family: {
+          bros: 2,
+          parents: {
+            father: "osama"
+          }
+        }
+
+      }
+    }
+
+    function isPrimitive(test) {
+      return (test !== Object(test));
+    };
+    function createNewRef(obj) {
+      let newObbj;
+      if (Array.isArray(obj)) {
+        newObbj = [...obj]
+        newObbj.map(element => {
+          return isPrimitive(element) ? element : createNewRef(element)
+        });
+      } else if (obj.toString() === '[object Object]') {
+        newObbj = { ...obj }
+        for (let key in newObbj) {
+          if (!isPrimitive(newObbj[key])) {
+            newObbj[key] = createNewRef(newObbj[key])
+          }
+        }
+      }
+      return newObbj
+    }
+    test = createNewRef(obj)
+    console.log(test === obj)
+    console.log(test.details === obj.details)
+    console.log(test.details.children === obj.details.children)
+    console.log(test.details.children === obj.details.children)
+    console.log(test.details.family === obj.details.family)
+    console.log(test.details.family.parents === obj.details.family.parents)
+  </script>
+</body>
+
+</html>
