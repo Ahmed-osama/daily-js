@@ -1,7 +1,7 @@
 <html>
 
 <head>
-  <title>title case</title>
+  <title>Deep clone</title>
 </head>
 
 <body>
@@ -25,9 +25,12 @@
     function isPrimitive(test) {
       return (test !== Object(test));
     };
+
     function createNewRef(obj) {
       let newObbj;
-      if (Array.isArray(obj)) {
+      if (isPrimitive(obj)) {
+        return obj
+      } else if (Array.isArray(obj)) {
         newObbj = [...obj]
         newObbj.map(element => {
           return isPrimitive(element) ? element : createNewRef(element)
@@ -42,13 +45,44 @@
       }
       return newObbj
     }
-    test = createNewRef(obj)
-    console.log(test === obj)
-    console.log(test.details === obj.details)
-    console.log(test.details.children === obj.details.children)
-    console.log(test.details.children === obj.details.children)
-    console.log(test.details.family === obj.details.family)
-    console.log(test.details.family.parents === obj.details.family.parents)
+
+    let newData;
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then(res => res.json())
+      .then(data => {
+
+        performance.mark("createNewRef-start");
+        newData = [...createNewRef(data)]
+        performance.mark("createNewRef-end");
+        performance.measure(
+          "createNewRef",
+          "createNewRef-start",
+          "createNewRef-end"
+        );
+        console.log('newData => ', performance.getEntriesByName("createNewRef")[0].duration / data.length)
+      })
+
+    // performance.mark("jsonparse-start");
+    // test2 = JSON.parse(JSON.stringify(obj))
+    // performance.mark("jsonparse-end");
+    // performance.measure(
+    //   "jsonparse",
+    //   "jsonparse-start",
+    //   "jsonparse-end"
+    // );
+
+
+
+    // console.log(performance.getEntriesByName("createNewRef")[0].duration, performance.getEntriesByName("jsonparse")[0].duration)
+    // permitive = createNewRef("ahmed")
+
+    // console.log(permitive)
+    // console.log(test === obj)
+    // console.log(test.details === obj.details)
+    // console.log(test.details.children === obj.details.children)
+    // console.log(test.details.children === obj.details.children)
+    // console.log(test.details.family === obj.details.family)
+    // console.log(test.details.family.parents === obj.details.family.parents)
   </script>
 </body>
 
