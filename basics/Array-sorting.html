@@ -32,9 +32,9 @@
       "Chevrolet",
       "Cadillac",
       "Chrysler"]
-    let sorted = carBrands.sort((a, b) => sortTable[a] > sortTable[b] ? -1 : 1)
+    let sorted = [...carBrands].sort((a, b) => sortTable[a] > sortTable[b] ? -1 : 1)
 
-    console.log(sorted)
+    console.log(carBrands, sorted)
   </script>
 </body>
 
