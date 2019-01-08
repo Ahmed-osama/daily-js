@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.1/redux.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <title>Minimal redux Implemntation</title>
+</head>
+
+<body>
+  <div class="container">
+    <h1 id="app"></h1>
+    <buttton id="increase" class="btn-small">+</buttton>
+    <buttton id="decrease" class="btn-small">-</buttton>
+  </div>
+  <script>
+    let { createStore } = Redux;
+    const appContainer = document.querySelector('#app');
+    const increaseBtn = document.querySelector('#increase');
+    const decreaseBtn = document.querySelector('#decrease');
+
+    const reducers = {
+      'INCREMENT': state => state + 1,
+      'DECREMENT': state => state - 1,
+    }
+
+    function createAction(type) {
+      return {
+        type
+      }
+    }
+    function mainReducer(state = 0, action) {
+      let selectReducer = reducers[action.type]
+      return selectReducer ? selectReducer(state) : state
+    }
+
+    const store = createStore(mainReducer);
+
+
+    function render() {
+      appContainer.innerHTML = store.getState()
+    }
+
+    store.subscribe(render)
+    render()
+
+    increaseBtn.addEventListener('click', () => store.dispatch(createAction('INCREMENT')))
+    decreaseBtn.addEventListener('click', () => store.dispatch(createAction('DECREMENT')))
+
+  </script>
+</body>
+
+</html>
