@@ -174,6 +174,7 @@ var ahmed = {
   },
   children: ["Hmaza"]
 };
+ahmed.age = 30;
 var red = types_1.Color.red; // Declarations
 
 var addOutput = declarations_1.add(5, 6); //assertions 

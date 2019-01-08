@@ -10,6 +10,7 @@ const ahmed: Person = {
     walk: () => 2,
     children: ["Hmaza"],
 }
+ahmed.age = 30
 let red: Color = Color.red
 
 // Declarations

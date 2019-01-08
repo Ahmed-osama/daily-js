@@ -1,6 +1,6 @@
 export interface Person {
     name: string,
-    age: number,
+    readonly age: number,
     children: string[],
     job?: any,
     walk: () => number
