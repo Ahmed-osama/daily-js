@@ -9,7 +9,6 @@ const ahmed: Person = {
     age: 28,
     walk: () => 2,
     children: ["Hmaza"],
-    job: 'Frontender'
 }
 let red: Color = Color.red
 

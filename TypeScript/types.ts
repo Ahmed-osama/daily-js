@@ -2,7 +2,7 @@ export interface Person {
     name: string,
     age: number,
     children: string[],
-    job: any,
+    job?: any,
     walk: () => number
 }
 

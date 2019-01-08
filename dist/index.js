@@ -172,8 +172,7 @@ var ahmed = {
   walk: function walk() {
     return 2;
   },
-  children: ["Hmaza"],
-  job: 'Frontender'
+  children: ["Hmaza"]
 };
 var red = types_1.Color.red; // Declarations
 
