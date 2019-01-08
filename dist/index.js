@@ -131,6 +131,29 @@ exports.add = function (a, b) {
 
   return a + b;
 };
+},{}],"assertions.ts":[function(require,module,exports) {
+"use strict";
+
+exports.__esModule = true;
+var input = ['Judy', 'renad'];
+exports.len = input.length;
+
+function createPoint(long, lat) {
+  if (long === void 0) {
+    long = 0;
+  }
+
+  if (lat === void 0) {
+    lat = 0;
+  }
+
+  return {
+    long: long,
+    lat: lat
+  };
+}
+
+exports.createPoint = createPoint;
 },{}],"index.ts":[function(require,module,exports) {
 "use strict";
 
@@ -138,7 +161,9 @@ exports.__esModule = true;
 
 var types_1 = require("./types");
 
-var declarations_1 = require("./declarations"); // Types
+var declarations_1 = require("./declarations");
+
+var assertions_1 = require("./assertions"); // Types
 
 
 var ahmed = {
@@ -152,8 +177,11 @@ var ahmed = {
 };
 var red = types_1.Color.red; // Declarations
 
-var addOutput = declarations_1.add(5, 6);
-},{"./types":"types.ts","./declarations":"declarations.ts"}],"../../../.nvm/versions/node/v9.11.2/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+var addOutput = declarations_1.add(5, 6); //assertions 
+
+var mapPoint = assertions_1.createPoint(25, 43);
+console.log(mapPoint);
+},{"./types":"types.ts","./declarations":"declarations.ts","./assertions":"assertions.ts"}],"../../../.nvm/versions/node/v9.11.2/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;

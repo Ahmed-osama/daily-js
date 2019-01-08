@@ -1,5 +1,7 @@
 import { Person, Color } from './types';
 import { add } from './declarations';
+import { len, createPoint } from './assertions';
+
 
 // Types
 const ahmed: Person = {
@@ -13,4 +15,8 @@ let red: Color = Color.red
 
 // Declarations
 let addOutput = add(5, 6)
+//assertions 
+let mapPoint = createPoint(25, 43)
+console.log(mapPoint)
+
 
