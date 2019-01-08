@@ -6,4 +6,4 @@ export interface Person {
     walk: () => number
 }
 
-export enum { red, green, blue }
+export enum Color { red, green, blue }
