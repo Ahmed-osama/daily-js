@@ -95,7 +95,6 @@
       if (e.target.matches('.delete')) {
         store.dispatch(createAction('DELETE_TASK', +e.target.closest('.todo').getAttribute('data-id')))
       } else if (e.target.matches('.todo')) {
-
         store.dispatch(createAction('TOGGLE_TASK', +e.target.getAttribute('data-id')))
       }
     })
