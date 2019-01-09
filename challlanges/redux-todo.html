@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.1/redux.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <title>Minimal redux Implemntation</title>
+</head>
+<style>
+  .app {
+    max-width: 600px;
+    margin-top: 100px;
+  }
+
+  .todos:empty {
+    display: none;
+  }
+
+  .linethrough {
+    text-decoration: line-through;
+  }
+</style>
+
+<body>
+  <div class="container app">
+    <div class="input-field col s6">
+      <input placeholder="add new task" id="new_task" type="text" class="validate">
+
+    </div>
+    <ul id="todos" class="collection todos"></ul>
+
+  </div>
+  <script>
+    let { createStore } = Redux;
+    const todos = document.querySelector('#todos');
+    const newTask = document.querySelector('#new_task');
+    const decreaseBtn = document.querySelector('#decrease');
+    let ID = 0;
+
+    const reducers = {
+      'ADD_TASK': (state, payload) => [...state, payload],
+      'DELETE_TASK': (state, payload) => state.filter(item => item.id !== payload),
+      'TOGGLE_TASK': (state, payload) => state.map(item => {
+        if (item.id === payload) {
+          item.state = !item.state
+        }
+        return item
+      }),
+
+    }
+
+    function createAction(type, payload) {
+      return {
+        type,
+        payload
+      }
+    }
+    function createTask(value) {
+      return {
+        value,
+        id: ID++,
+        state: false
+      }
+    }
+    function mainReducer(state = [], action) {
+      let selectReducer = reducers[action.type]
+      return selectReducer ? selectReducer(state, action.payload) : state
+    }
+
+    const store = createStore(mainReducer);
+
+
+    function render() {
+      todos.innerHTML = store.getState().reduce((acc, todo) => acc + `
+        <li class="collection-item todo ${todo.state && 'linethrough'}" data-id="${todo.id}" >
+          ${todo.value}
+          <button class="secondary-content delete">delete</button>
+        <li>
+      `, "")
+    }
+
+    store.subscribe(render)
+    render()
+
+    newTask.addEventListener('keyup', (e) => {
+      if (e.key === 'Enter' && e.target.value.length > 2) {
+        store.dispatch(createAction('ADD_TASK', createTask(e.target.value)))
+        e.target.value = ""
+      }
+    })
+    todos.addEventListener('click', e => {
+      if (e.target.matches('.delete')) {
+        store.dispatch(createAction('DELETE_TASK', +e.target.closest('.todo').getAttribute('data-id')))
+      } else if (e.target.matches('.todo')) {
+
+        store.dispatch(createAction('TOGGLE_TASK', +e.target.getAttribute('data-id')))
+      }
+    })
+
+  </script>
+</body>
+
+</html>

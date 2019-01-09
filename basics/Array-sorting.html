@@ -39,7 +39,7 @@
     const vowels = { a: 5, e: 4, i: 3, o: 2, u: 1 }
     function vowelsAndConsonants(s) {
       let arr = s.split("")
-      let filtered = arr.filter(i => !!vowels[i]).sort((a, b) => (vowels[a] || 0) > (vowels[b] || 0) ? -1 : 1)
+      let filtered = arr.filter(i => !!vowels[i])
 
       let rest = arr.filter(i => !vowels[i])
 
