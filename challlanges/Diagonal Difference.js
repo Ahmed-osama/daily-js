@@ -4,7 +4,7 @@ function diagonalDifference(matrix) {
   const primary = matrix.reduce((a, b, idx) => a + parseInt(b[idx]), 0);
 
   const secondary = matrix.reduce((a, b, idx) => a + parseInt(b[size - idx - 1]), 0);
-  console.log(secondary);
+
   return Math.abs(primary - secondary);
 }
 console.log(diagonalDifference(arr));
