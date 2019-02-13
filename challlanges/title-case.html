@@ -11,13 +11,14 @@
                 
                 minorWords =minorWords? minorWords.split(" "):[]
                 minorWords = minorWords.map(w=>w.toLowerCase())
+
                 title = title.split(" ").map((w,i) => {
                    
                     if(i!==0 && minorWords.includes(w.toLowerCase())){
                        
-                       return  w.toLowerCase()
+                       return  w.toLowerCase();
                     }
-                    console.log(title.split(" "))
+                    console.log(title.split(" "));
                     
                     if(i===0 || !minorWords.includes(w.toLowerCase())){
                        
