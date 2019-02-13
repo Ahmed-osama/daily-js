@@ -1,43 +1,43 @@
 
 
 <html>
-    <head>
-        <title>title case</title>
-    </head>
-    <body>
-       
-        <script>
-            function titleCase(title, minorWords) {
-                
-                minorWords =minorWords? minorWords.split(" "):[]
-                minorWords = minorWords.map(w=>w.toLowerCase())
+<head>
+<title>title case</title>
+</head>
+<body>
 
-                title = title.split(" ").map((w,i) => {
-                   
-                    if(i!==0 && minorWords.includes(w.toLowerCase())){
-                       
-                       return  w.toLowerCase();
-                    }
-                    console.log(title.split(" "));
-                    
-                    if(i===0 || !minorWords.includes(w.toLowerCase())){
-                       
-                       return  w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()
-                    } 
-                })
-                
-                return title.join(" ")
-            }
-            
+<script>
+function titleCase(title, minorWords) {
 
-            console.log(titleCase('a clash of KINGS', 'a an the of'))
-                        
-            console.log(titleCase('THE WIND IN THE WILLOWS', 'The In'))
+minorWords =minorWords? minorWords.split(" "):[]
+minorWords = minorWords.map(w=>w.toLowerCase())
 
-            console.log(titleCase('the quick brown fox'))
+title = title.split(" ").map((w,i) => {
+
+if(i!==0 && minorWords.includes(w.toLowerCase())){
+
+return  w.toLowerCase();
+}
+console.log(title.split(" "));
+
+if(i===0 || !minorWords.includes(w.toLowerCase())){
+
+return  w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()
+} 
+})
+
+return title.join(" ")
+}
 
 
+console.log(titleCase('a clash of KINGS', 'a an the of'))
 
-        </script>
-    </body>
+console.log(titleCase('THE WIND IN THE WILLOWS', 'The In'))
+
+console.log(titleCase('the quick brown fox'))
+
+
+
+</script>
+</body>
 </html>
