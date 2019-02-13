@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        let matrix = [[4, 9, 2], [3, 5, 7], [8, 1, 5]];
+        const getTotalOfarray = (arr) => arr.reduce((a, b) => a + b, 0);
+
+
+        const getColumnsFromRows = arr => {
+            return arr.map((innerArr, index) => {
+                return arr.reduce((acc, item, indexx) => {
+                    return [...acc, item[index]]
+                }, [])
+            })
+        }
+        function formingMagicSquare(s) {
+
+            let points = 0;
+            s.forEach((arr, rowIndex) => {
+                const rowTotal = getTotalOfarray(arr);
+                if (getTotalOfarray(arr) !== 15) {
+                    cacheRowIndex = rowIndex;
+                    const columns = getColumnsFromRows(s)
+
+                    columns.forEach((item, columnIndex) => {
+                        const columnTotal = getTotalOfarray(item);
+                        if (columnTotal !== 15) {
+                            console.log(rowIndex, columnIndex)
+                            if (rowTotal === columnTotal) {
+                                points += Math.abs(s[rowIndex][columnIndex] - 15)
+                            }
+                        }
+                    })
+
+                }
+            })
+
+        }
+
+        formingMagicSquare(matrix)
+
+    </script>
+</body>
+
+</html>

@@ -1,2 +1,1 @@
-const ahmed = 'Ahmed osama'
-;
+export default 'Ahmed osama';
