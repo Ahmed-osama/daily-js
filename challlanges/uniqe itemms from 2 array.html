@@ -1,0 +1,47 @@
+
+<html>
+    <head>
+        <title>compare array of objects</title>
+    </head>
+    <body>
+       <div id="view"></div>
+        <script>
+            const setOne = [
+                {
+                    id:'x1',
+                    name:'ahmed'
+                },
+                {
+                    id:'x2',
+                    name:'hamza'
+                },
+                {
+                    id:'x3',
+                    name:'eyad'
+                },
+            ]
+            const setTwo = [
+                {
+                    id:'x1',
+                    name:'Osama'
+                },
+                {
+                    id:'x2',
+                    name:'Magdy'
+                },
+                {
+                    id:'x3',
+                    name:'eyad'
+                },
+            ]
+            
+
+            // required outbut
+            const concateArr = Object.values([...setOne,...setTwo].reduce((acc,item)=>{
+                 acc[item.id] = item
+                 return acc
+            },{}))
+            console.log(concateArr)
+        </script>
+    </body>
+</html>
