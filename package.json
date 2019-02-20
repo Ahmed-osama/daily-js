@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --watchAll",
-    "start": "json-server --watch ./json-server/db.js "
+    "start": "json-server --watch ./json-server/db.js ",
+    "exteme": "git add . && git commit -am 'exteme fast commit' && git push"
   },
   "repository": {
     "type": "git",
