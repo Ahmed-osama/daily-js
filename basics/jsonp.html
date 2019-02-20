@@ -11,12 +11,19 @@
 
         </ul>
         <script>
+            
             const todo = ({id, title, completed}) => `<li id="id-${id}"><input checked=${completed} type="checkbox"/>${title}</li>`
             const output = arr => arr.map(aTodo => todo(aTodo)).join('')
             const render = (target,html) => target.innerHTML = html;
             const print = data =>  render(document.getElementById('preview'),output(data) )
+           
+            const jsonpCaller = (url,func) =>{
+                const script = document.createElement('script');
+                script.src = `${url}?callback=${func}`;
+                document.body.appendChild(script)
+            }
             
+            jsonpCaller(`https://jsonplaceholder.typicode.com/todos/1`,`print`)
         </script>
-        <script src="https://jsonplaceholder.typicode.com/todos?callback=print"></script>
     </body>
 </html>

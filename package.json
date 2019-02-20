@@ -19,7 +19,9 @@
   "homepage": "https://github.com/Ahmed-osama/daily-js#readme",
   "dependencies": {
     "axios": "^0.18.0",
-    "faker": "^4.1.0"
+    "bootstrap": "^4.3.1",
+    "faker": "^4.1.0",
+    "lodash": "^4.17.11"
   },
   "devDependencies": {
     "eslint": "^5.8.0",
