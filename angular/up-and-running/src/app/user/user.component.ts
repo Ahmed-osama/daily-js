@@ -9,6 +9,9 @@ import { EventEmitter } from "@angular/core";
       .red {
         color: red;
       }
+      .green {
+        color: green;
+      }
     `
   ]
 })

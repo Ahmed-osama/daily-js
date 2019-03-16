@@ -1,6 +1,12 @@
 <div ng-if="user" class="red">
   <img [src]="user.image" alt="" />
-  <h4>{{ user.name }}</h4>
+  <h4
+    [ngClass]="{
+      green: user.name === 'Ms. Anabel VonRueden'
+    }"
+  >
+    {{ user.name }}
+  </h4>
   <sub>{{ user.jobTitle }}</sub>
   <p>{{ user.email }}</p>
   <hr />
