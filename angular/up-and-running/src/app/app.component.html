@@ -31,5 +31,13 @@
     </h2>
   </li>
 </ul>
-<app-user [user]="user" (showAge)="handleShowAge($event)"></app-user>
+<app-user
+  [user]="user"
+  #userComponenet
+  (showAge)="handleShowAge($event)"
+></app-user>
+
+<button (click)="userComponenet.log(userComponenet.user.age)">
+  log
+</button>
 <router-outlet></router-outlet>
