@@ -1,5 +1,7 @@
-<p ng-if="user" class="red">
-  {{ user.name }}
-  <span ng-if="user.age">{{ user.age }}</span>
-  <button (click)="handleClick('Ahmed')">click</button>
-</p>
+<div ng-if="user" class="red">
+  <img [src]="user.image" alt="" />
+  <h4>{{ user.name }}</h4>
+  <sub>{{ user.jobTitle }}</sub>
+  <p>{{ user.email }}</p>
+  <hr />
+</div>

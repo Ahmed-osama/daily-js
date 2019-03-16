@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-
+import users from "./users.mock";
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
@@ -7,17 +7,5 @@ import { Component } from "@angular/core";
 })
 export class AppComponent {
   title = "up-and-running";
-  user = {
-    name: "Ahmed osama",
-    age: null
-  };
-
-  handleShowAge(e) {
-    console.log(e);
-    if (!this.user.age) {
-      this.user.age = 28;
-      return;
-    }
-    this.user.age++;
-  }
+  users = users;
 }

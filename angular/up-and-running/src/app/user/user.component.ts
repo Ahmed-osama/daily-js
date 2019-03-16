@@ -12,14 +12,9 @@ import { EventEmitter } from "@angular/core";
     `
   ]
 })
-export class UserComponent implements OnInit {
+export class UserComponent {
   constructor() {}
-  innerAge = 90;
-  ngOnInit() {}
-  handleClick() {
-    this.showAge.emit();
-  }
-  log = console.log;
+
   @Input() user: any;
   @Output() showAge = new EventEmitter();
 }
