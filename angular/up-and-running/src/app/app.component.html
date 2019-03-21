@@ -3,9 +3,11 @@
   <app-user
     *ngFor="let user of users"
     [user]="user"
-    ng-if="user"
+    ng-if="users"
     (showAge)="handleShowAge($event)"
   ></app-user>
-
+  <div ng-if="!users">
+    loading....
+  </div>
   <router-outlet></router-outlet>
 </div>

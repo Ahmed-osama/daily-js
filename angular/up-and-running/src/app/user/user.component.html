@@ -8,6 +8,12 @@
     {{ user.name }}
   </h4>
   <sub>{{ user.jobTitle }}</sub>
-  <p>{{ user.email }}</p>
+  <p
+    [ngStyle]="{
+      'font-weight': user.email === 'Halie78@hotmail.com' ? 'bold' : 'normal'
+    }"
+  >
+    {{ user.email }}
+  </p>
   <hr />
 </div>
