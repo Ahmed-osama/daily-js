@@ -10,3 +10,5 @@ function animate() {
   ctx.stroke();
   ctx.strokeStyle = `rgba(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255},1)`;
 }
+animate()
+;

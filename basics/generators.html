@@ -17,8 +17,8 @@
         yield getTodo(4);
         yield getTodo(5);
       }
-
-      myGenerator().next(x => console.log(x));
+      const gen = myGenerator();
+      gen.next();
     </script>
   </body>
 </html>
