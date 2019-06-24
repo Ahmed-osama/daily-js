@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>its just a closure application</h1>
+    <div id="output"></div>
+    <script>
+      function masterMind(initialState = {}, target) {
+        const handelers = {};
+
+        const observe = state =>
+          new Proxy(state, {
+            set(target, key, value) {
+              target[key] = value;
+              key !== "__renderCount" && handelers.render && handelers.render();
+            }
+          });
+        const state = observe({ ...initialState, __renderCount: 0 });
+        handelers.render = () => {
+          if (!target) console.warn("no defined target");
+          if (!handelers.template)
+            console.warn('define a "template" before render');
+          if (handelers.template && target) {
+            target.innerHTML = handelers.template.bind({ state, handelers })();
+            handelers.setState({ __renderCount: state.__renderCount + 1 });
+            if (state.__focus) {
+              const selector = document.querySelector(
+                `[name="${state.__focus}"]`
+              );
+              
+              selector.selectionStart = selector.value.length
+              selector.selectionEnd = selector.value.length;
+              selector.focus();
+            }
+          }
+        };
+        handelers.define = (label, func) => {
+          handelers[label] = func.bind({ state, handelers });
+          setTimeout(handelers.render, 0);
+        };
+        handelers.getState = select => {
+          let output;
+          if (!select) {
+            output = state;
+          } else if (state[select]) {
+            output = state[select];
+          } else {
+            output = null;
+          }
+          console.log(output);
+        };
+        handelers.setState = obj => {
+          for (key in obj) {
+            state[key] = obj[key];
+          }
+        };
+        handelers.getHandelers = () => console.log(Object.keys(handelers));
+
+        return handelers;
+      }
+
+      const myComponenet = masterMind(
+        { count: 0 },
+        document.getElementById("output")
+      );
+      myComponenet.define("template", function() {
+        return `
+            <ul>
+                <li>
+                    <strong>
+                        full name :
+                    </strong>
+                    ${
+                      this.handelers.getFullName
+                        ? this.handelers.getFullName()
+                        : ""
+                    }
+                </li>
+                <li>
+                    <strong>
+                        Count :
+                    </strong>
+                    ${this.state.count}
+                </li>
+                <li>
+                    <strong>
+                        render Count :
+                    </strong>
+                    ${this.state.__renderCount}
+                </li>
+                <li>
+                    <button onclick="myComponenet.add(10)">Add by 10</button>
+                    <button onclick="myComponenet.multi(10)">Multibly by 10</button>
+                    <button onclick="
+                        myComponenet.setState({
+                            count:0
+                        })
+                    ">Reset</button>
+                </li>
+
+            </ul>
+            <input type="text" value="${
+              this.state.firstName
+            }" name="firstName" onkeyup="myComponenet.handleInputChage(event)" onchange="myComponenet.handleInputChage(event)">
+            <input type="text"value="${
+              this.state.lastName
+            }" name="lastName" onkeyup="myComponenet.handleInputChage(event)" onchange="myComponenet.handleInputChage(event)">
+        `;
+      });
+      myComponenet.define("add", function(number) {
+        this.handelers.setState({ count: this.state.count + number });
+      });
+      myComponenet.define("multi", function(number) {
+        this.handelers.setState({ count: this.state.count * number });
+      });
+      //   myComponenet.add(2);
+      myComponenet.multi(7);
+      myComponenet.setState({
+        firstName: "",
+        lastName: ""
+      });
+      myComponenet.define("getFullName", function() {
+        try {
+          return this.state.firstName + " " + this.state.lastName;
+        } catch {
+          return "no full name";
+        }
+      });
+      myComponenet.define("handleInputChage", function(e) {
+        const name = e.target.name;
+        const value = e.target.value;
+        this.handelers.setState({
+          [name]: value
+        });
+        this.handelers.focusPipe(e);
+      });
+      myComponenet.define("focusPipe", function(e) {
+        this.handelers.setState({
+          __focus: e instanceof KeyboardEvent ? e.target.name : ""
+        });
+      });
+    </script>
+  </body>
+</html>
