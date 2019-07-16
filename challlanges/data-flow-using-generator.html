@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Generator app</title>
+  </head>
+  <body>
+    <script>
+      const baseApiUrl = `https://jsonplaceholder.typicode.com/`;
+
+      async function getTodoOfIndex(i) {
+        let response = await fetch(`${baseApiUrl}todos/${i}`);
+        let data = await response.json();
+        return data;
+      }
+
+      function* fetchTodos() {
+        i = 0;
+        while (true) {
+          yield getTodoOfIndex(i);
+          i++;
+        }
+      }
+
+      const todosGetter = fetchTodos();
+
+      setInterval(() => {
+        todosGetter.next().value.then(console.log);
+      }, 1000);
+    </script>
+  </body>
+</html>
