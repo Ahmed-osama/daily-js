@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router();
-
+const feedbackRoute = require('./feedback')
+const speakersRoute = require('./speakers')
 
 module.exports = () => {
   router.get('/', (req, res) => {
@@ -9,9 +10,8 @@ module.exports = () => {
     });
   });
 
-  router.get('/speakers', (req, res) => {
-    res.sendFile(path.join(__dirname, './static/speakers.html'));
-  });
+  router.use('/speakers', speakersRoute());
+  router.use('/feedback', feedbackRoute());
 
   return router
 }
