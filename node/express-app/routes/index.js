@@ -5,8 +5,13 @@ const speakersRoute = require('./speakers')
 
 module.exports = (services) => {
   router.get('/', (req, res) => {
+    if (!req.session.visitCount) {
+      req.session.visitCount = 0
+    }
+    req.session.visitCount += 1
     res.render('pages/index', {
-      pageTitle: 'Ahmed Osama'
+      pageTitle: 'Ahmed Osama',
+      visitCount: req.session.visitCount
     });
   });
 
