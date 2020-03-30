@@ -4,10 +4,14 @@ const path = require('path');
 const app = express();
 const PORT = 300;
 
-app.use(express.static(path.join(__dirname, './static/')));
+app.set('view engine', 'ejs')
+app.use(express.static(path.join(__dirname, './static')));
+app.set('views', path.join(__dirname, './views'));
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, './static/index.html'));
+  res.render('pages/index', {
+    pageTitle: 'Ahmed Osama'
+  });
 });
 
 app.get('/speakers', (req, res) => {
@@ -15,5 +19,5 @@ app.get('/speakers', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`server started on port http://localhost:${PORT}`);
+  console.log(`horray server started on port http://localhost:${PORT}`);
 });
