@@ -8,13 +8,9 @@ app.get('/redirect/:url', (req, res) => {
   res.redirect(`http://${req.params.url}.com`);
 });
 
-app.get('/item/:id', (req, res, next) => {
-  const { id } = req.params;
-
-  res.json(data.find(person => person.id == id));
-  next();
-}, () => {
-  console.log('you called the next MW');
+app.get('/item/:id', (req, res) => {
+  console.log(req);
+  res.json({ type: req.type });
 });
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -24,6 +20,7 @@ app.get('/images/:file', (req, res) => {
   const { file } = req.params;
   res.download(file);
 });
+
 
 app.route('/newItem')
   .get((req, res) => {
