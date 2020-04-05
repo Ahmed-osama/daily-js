@@ -4,9 +4,10 @@ import data from './data/data.json';
 
 const app = express();
 const PORT = 3000;
-app.get('/', (req, res) => {
-  res.redirect('/index.html');
+app.get('/redirect/:url', (req, res) => {
+  res.redirect(`http://${req.params.url}.com`);
 });
+
 app.get('/item/:id', (req, res, next) => {
   const { id } = req.params;
 
