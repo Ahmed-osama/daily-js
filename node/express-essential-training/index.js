@@ -19,7 +19,10 @@ app.get('/item/:id', (req, res, next) => {
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
-
+app.get('/images/:file', (req, res) => {
+  const { file } = req.params;
+  res.download(file);
+});
 app.post('/newItem', (req, res) => {
   res.send(`a POST req  on route /newItem port ${PORT}`);
 });
