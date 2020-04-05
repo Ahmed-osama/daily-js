@@ -7,6 +7,14 @@ const PORT = 3000;
 app.get('/', (req, res) => {
   res.redirect('/index.html');
 });
+app.get('/item/:id', (req, res, next) => {
+  const { id } = req.params;
+
+  res.json(data.find(person => person.id == id));
+  next();
+}, () => {
+  console.log('you called the next MW');
+});
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
