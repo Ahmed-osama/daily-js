@@ -1,11 +1,15 @@
 import express from 'express';
+import path from 'path';
 import data from './data/data.json';
 
 const app = express();
 const PORT = 3000;
 app.get('/', (req, res) => {
-  res.json(data);
+  res.redirect('/index.html');
 });
+
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.post('/newItem', (req, res) => {
   res.send(`a POST req  on route /newItem port ${PORT}`);
