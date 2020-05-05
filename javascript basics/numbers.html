@@ -1,0 +1,57 @@
+
+<html>
+    <head>
+        <title>Numbers</title>
+        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+        <meta charset="UTF-8">
+        
+    </head>
+    <body>
+
+        <script>
+            "use strict";  
+            function _(...msg){
+                console.log(...msg)
+            }
+
+            // all numbers in JS are sotred in 64-bit Formate
+                let x = 9
+                let billion = 1e11
+                _(billion)
+
+                let milliSecond = 1e-3
+                _(milliSecond)
+
+                _(0.001 == 1e-3)
+                _(1000 == 1e3)
+                _(100000 == 1e5)
+            
+            /*hex, octal & binary numbers starts with
+                heax => 0x
+                octal => 0O
+                binary => 0b
+            */
+
+            let number = 1023
+            _("Hex ==> "+number.toString(16)) // converts to hexa code
+            _("Binary ==> "+number.toString(2)) // converts to binary code
+            _("short large numbers ==> "+number.toString(36)) // used to shorten large numbers
+            /*
+                12312312.toString() <= false way
+                12312312..toString() <= true
+                (12312312).toString() <= true
+            */
+            _('convert back', Number(number.toString(36)))
+
+            //Math object
+
+            _('3.124 round => : ' + Math.round(3.124)) // 3
+            _('3.124 ceil => : ' + Math.ceil(3.124)) // 4
+            _('3.9 floor => : ' + Math.floor(3.9)) // 3 floor rounds down
+            _('2.534535  trunc => : ' + Math.trunc(2.534535)) // removes every thing after the point
+            _('2.534535  toFixed => : ' + (2.534535).toFixed(2)) // Rounds the numbersafter the decimal points
+            _('random => : ' + Math.random() ) // Math random returns random value from 0 => 1
+            _('math pow 2 pow 10: ' + Math.pow(4,5) )
+        </script>
+    </body>
+</html>

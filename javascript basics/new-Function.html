@@ -1,0 +1,28 @@
+!
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>new Function</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+    <script>
+        let dynamicFunction = new Function('a', 'b', `
+            let = c = (a+b)*100;
+            return c
+        `)
+        let dynamicFunction2 = new Function('a,b', `
+            let = c = (a+b)*100;
+            return c
+        `)
+        console.log(dynamicFunction(3, 5) == dynamicFunction2(3, 5))
+    </script>
+
+</body>
+
+</html>

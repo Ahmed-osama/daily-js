@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Array sorting selectivly</title>
+</head>
+
+<body>
+  <script>
+    let sortTable = {
+      Honda: 1, // 6
+      "Aston Martin": 4, // 3
+      "BMW": 10,//should be first
+      "Chrysler": 2, // 5
+      "Cadillac": 3, // 4
+      "Chevrolet": 5, // 2
+      "Bugatti": -1, // 8
+      "Audi": -2, // 9
+      "Bentley": -3, //should be the last
+      "Buick": 0, // 7
+    }
+    let carBrands = [
+      "Aston Martin",
+      "Audi",
+      "Bentley",
+      "BMW",
+      "Buick",
+      "Bugatti",
+      "Chevrolet",
+      "Cadillac",
+      "Chrysler"]
+    let sorted = [...carBrands].sort((a, b) => sortTable[a] > sortTable[b] ? -1 : 1)
+
+    console.log(carBrands, sorted)
+
+    const vowels = { a: 5, e: 4, i: 3, o: 2, u: 1 }
+    function vowelsAndConsonants(s) {
+      let arr = s.split("")
+      let filtered = arr.filter(i => !!vowels[i])
+
+      let rest = arr.filter(i => !vowels[i])
+
+      let newarr = [...filtered, ...rest]
+
+      newarr.forEach(i => console.log(i))
+    }
+
+    vowelsAndConsonants('learnjavascriptloopsinhackerrankweekofcode')
+  </script>
+</body>
+
+</html>

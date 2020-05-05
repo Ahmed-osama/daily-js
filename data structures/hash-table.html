@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hash Table</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+        crossorigin="anonymous">
+    <style>
+       
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Hash Table</h1>
+    </div>
+
+    <div id="view">
+
+    </div>
+
+</body>
+<script>
+    
+    function render( target, str){
+        document.getElementById(target).innerHTML+=container(str)
+    }
+    function container(child){
+        return `<hr/><div class="container">${child}</div>`
+    }
+    
+    let view = render.bind(null, 'view')
+
+    //Hashing function
+    function hashFunc(str, tableLength ){
+        let hash =0;
+        for(i=0; i<str.length;i++){
+            hash+= str.charCodeAt(i)*(i+1)
+        }
+        return hash % tableLength
+    }
+
+   
+    
+    class HashTable {
+        constructor(tableSize){
+            this.tableSize = tableSize;
+            this.store = []
+            this.count = 0
+            
+        }
+        find(key){
+            let hash = hashFunc(key, this.tableSize);
+           
+            this.store[hash] = this.store[hash] || []
+            let bucket = this.store[hash]
+            let match;
+            let matchIndex; 
+
+            bucket.forEach((item, index) => {
+                if(item.hasOwnProperty(key)){
+                    match = item;
+                    matchIndex = index
+                }
+            });
+            return {
+                bucket,
+                match,
+                matchIndex
+            }
+        }
+        set(key, value){
+            let match = this.find(key).match
+            let bucket = this.find(key).bucket || []
+            if (match) {
+                match[key] = value;
+            }else{
+
+                let newItem ={}
+                newItem[hashFunc(key, this.tableSize)] = value
+                this.count++
+                bucket.push(newItem)
+                console.log(this)
+            }
+            return this
+        }
+        has(key){
+            console.log(this.find(key).match)
+            return !!this.find(key).match
+        }
+        delete(key){
+            let match = this.find(key).match
+            if(match){
+                let bucket = this.find(key).bucket
+                let matchIndex = this.find(key).matchIndex
+                bucket.splice(matchIndex,1)
+                this.count--
+                if (this._count < 0.25*this._size) {
+                    this.resize(0.5*this._size);
+                }
+            }
+            console.log(this.store)
+            return !!match
+        }
+        count(){
+            return this.count
+        }
+        forEach(cb){
+            this.store.forEach(bucket =>{
+                bucket.forEach(item => {
+                    cb(item)
+                })
+            })
+        }
+        resize(newSize){
+            let oldStore = this.store
+            this.size = newSize
+            this.count = 0
+            this.store = []
+            let  that = this
+            oldStore.forEach(bucket=>{
+                bucket.forEach(item=>{
+                    let key  = Object.keys(item)[0]
+                    that.set(key, item[key])
+                })
+            })
+            console.log(this.store)
+        }
+    }
+
+    let mytable = new HashTable(5)
+    mytable.set('khalil', 'osama')
+    mytable.set('khalil', 'Ahmed')
+    mytable.set('khalil', 'Ibrahim')
+    mytable.set('Dndn', 'hameed')
+    mytable.set('Dndn', 'fofo')
+    mytable.set('Dndn', 'nadnad')
+    console.log(mytable.has('khalil'))
+    mytable.resize(7)
+    let all =''
+    mytable.forEach(item=> all+= ' '+JSON.stringify(item))
+    console.log(all)
+    mytable.delete('Dndn')
+    
+</script>
+
+</html>

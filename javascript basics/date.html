@@ -1,0 +1,115 @@
+<html>
+    <head>
+        <title>Date</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <div class="container">
+            <table id="test" class="table">
+                  
+            </table>
+        </div>
+       
+        <script>
+            "use strict";   
+            //Preview Method
+                function render(target, html, empty){
+                    let $target = document.querySelector(target);
+                    let $html = `<tr class="h4"><td>${html}</td></tr>`;
+                    if(empty){
+                        $target.innerHTML = "";
+                        $target.innerHTML = $html;
+                    }else{
+                        $target.innerHTML += $html;
+                    }
+                }
+            //dates
+                // Instantiating a Date
+                    let today = new Date()
+                    render('#test', "today : "+today, false);
+
+                // Returns the day of the month (from 1-31).
+                    render('#test', "get date : "+today.getDate(), false);
+
+                // Returns the year (four digits)
+                    render('#test', "get full year : "+today.getFullYear(), false);
+
+                // Returns the hour (from 0-23)
+                    render('#test', "get Hours : "+today.getHours(), false);
+
+                // Returns the milliseconds (from 0-999)
+                    render('#test', "get milliseconds : "+today.getMilliseconds(), false);
+
+                // Returns the minutes (from 0-59)
+                    render('#test', "get minutes : "+today.getMinutes(), false);
+            
+                // Returns the day of the week (from 0-6)
+                    render('#test', "get month : "+today.getMonth(), false);
+
+                // Returns the seconds (from 0-59)
+                    render('#test', "get seconds : "+today.getSeconds(), false);
+
+                // Returns the number of milliseconds since midnight Jan 1, 1970
+                    render('#test', "get Time : "+today.getTime()+" milliseconds", false);
+                
+                // Returns the time difference between UTC time and local time, in minutes
+                    render('#test', "get Time zone offset : "+today.getTimezoneOffset()+" mins", false);
+
+                // Sets the day of the month of a date object
+                    render('#test', "set Date : "+today.setDate(parseInt(today.getDate())+2), false);
+
+                // Sets the year (four digits) of a date object
+                    render('#test', "set full year : "+today.setFullYear(1999,9,9), false);
+                
+                // Sets the hour of a date object
+                    render('#test', "set hours : "+today.setHours(1,1,1,1), false);
+
+                // Sets the milliseconds of a date object.
+                    render('#test', "set milliseconds  : "+today.setMilliseconds(-111111), false);
+
+                // Set the minutes of a date object.
+                    render('#test', "set minutes  : "+today.setMinutes(-939423549), false);
+                
+                // Sets the month of a date object.
+                    render('#test', "set Month  : "+ (new Date()).setMonth(0), false);
+
+                // Sets the seconds of a date object
+                    render('#test', "set seconds  : "+ (new Date()).setSeconds(0, 0), false);
+
+                // Sets a date and time by adding or subtracting a specified number of milliseconds to/from midnight January 1, 1970.
+                    render('#test', "set Time  : "+ (new Date()).setTime(0), false);
+
+                // Converts the date portion of a Date object into a readable string                    
+                    render('#test', "to date string  : " + (new Date()).toDateString(), false); 
+
+                // Returns the date as a string, using the ISO standard.                       
+                    render('#test', "to date string  : " + (new Date()).toISOString(), false);   
+
+                // Returns the date as a string, formatted as a JSON date.
+                    render('#test', "to JSON : " + (new Date()).toJSON(), false);  
+
+                // Returns the date portion of a Date object as a string, using locale conventions.
+                    render('#test', "to LOCAL String : " + (new Date()).toLocaleDateString(), false);  
+
+                // Returns the time portion of a Date object as a string, using locale conventions.
+                    render('#test', "to local Time  String : " + (new Date()).toLocaleTimeString(), false);  
+
+                // Converts a Date object to a string, using locale conventions.
+                    render('#test', "to local String : " + (new Date()).toLocaleString(), false);                 
+
+                // Converts a Date object to a string.
+                    render('#test', "to String : " + (new Date()).toString(), false);  
+                
+                // Convert the time portion of a Date object to a string.
+                    render('#test', "to time String : " + (new Date()).toTimeString(), false);  
+
+                // Converts a Date object to a string, according to universal time.
+                    render('#test', "to utc String : " + (new Date()).toUTCString(), false);  
+        
+                // Returns the primitive value of a Date object.
+                    render('#test', "value Of : " + (new Date()).valueOf(), false);  
+               
+        </script>
+    </body>
+</html>

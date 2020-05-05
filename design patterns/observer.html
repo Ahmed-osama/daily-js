@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Observer</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+      integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+      crossorigin="anonymous"
+    />
+    <style>
+      .list-group-item {
+        display: flex;
+        align-items: center;
+      }
+      .list-group-item img {
+        width: 35px;
+        height: 35px;
+        flex-basis: 35px;
+        margin-right: 10px;
+        border-radius: 50%;
+        background: #dfdfdf;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ul class="list-group" id="list"></ul>
+  </body>
+  <script>
+    observe = function() {
+      let subscriptions = {};
+      function subscribe(type, fn) {
+        if (!subscriptions[type]) {
+          subscriptions[type] = [];
+        }
+        if (subscriptions[type].indexOf(fn) == -1) {
+          subscriptions[type].push(fn);
+        }
+      }
+      function unsubscribe(type, fn) {
+        let listeners = subscriptions[type];
+        if (!listeners) return;
+        let index = listeners.indexOf(fn);
+        if (index > -1) {
+          subscriptions.splice(index, 1);
+        }
+      }
+      function puplish(type, evtobj) {
+        if (!subscriptions[type]) {
+          return;
+        }
+        if (!evtobj.type) {
+          evtobj.type = type;
+        }
+        let listeners = subscriptions[type];
+
+        for (let index = 0; index < listeners.length; index++) {
+          listeners[index](evtobj);
+        }
+      }
+      return {
+        subscribe,
+        unsubscribe,
+        puplish,
+        subscriptions
+      };
+    };
+    observe = observe();
+    const data = [];
+    fetch("https://api.github.com/users")
+      .then(d => d.json())
+      .then(d => {
+        data.push(...d);
+
+        makelist();
+      });
+
+    function template(content) {
+      return `<li class="list-group-item">${content.login}</li>`;
+    }
+    function render(e) {
+      e.target.innerHTML += e.template;
+    }
+
+    let list = document.querySelector("#list");
+    observe.subscribe("data/change", render);
+
+    function showimg(e) {
+      if (e.el.querySelector("img")) return;
+      e.el.innerHTML = `<img src="${e.data.avatar_url}">${e.el.innerHTML}`;
+    }
+    function makelist() {
+      for (item in data) {
+        observe.puplish("data/change", {
+          target: list,
+          template: template(data[item])
+        });
+      }
+
+      let listitems = document.querySelectorAll(".list-group-item");
+      listitems.forEach((item, index) => {
+        observe.subscribe("item/click", showimg);
+        item.addEventListener("click", function() {
+          observe.puplish("item/click", {
+            el: item,
+            data: data[index]
+          });
+        });
+      });
+    }
+
+    console.log(observe.subscriptions);
+  </script>
+</html>

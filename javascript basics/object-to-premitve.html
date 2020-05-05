@@ -1,0 +1,54 @@
+
+<html>
+    <head>
+        <title>object to premtive</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <meta charset="UTF-8">
+        
+    </head>
+    <body>
+        <div class="container">
+           <div class="playground">
+                <span class="player">10</span>
+           </div>
+        </div>
+       
+        <script>
+            "use strict";  
+             function _(msg){
+                 console.log(msg)
+             }
+
+            let ahmed = {
+                name:"ahmed osama",
+                age:23,
+                toString(){
+                    return `this is ${this.name} object` 
+                },
+                valueOf(){
+                    return  this.age
+                },
+                // [Symbol.toPrimitive](hint) {
+                //     return hint == "string" ? `{name: "${this.name}"}` : this.money;
+                // }
+
+             }
+             _("hi : " + ahmed.toString())
+             _(3 + ahmed.valueOf())
+             _(1 + ahmed)
+             _("hi : " + ahmed)
+             
+            /*
+                1 - all objects has a truthy value so no need for a boolean convertion
+                2 - ToPremitve
+                    - string : when operation expects string like alert()
+                    - number : \\ \\ \\ \\ \\ \\ \\ \ number like math operations 
+                    - default : when the operator is not sure what type to do like "+" <= because + is used for both numbser and strings,
+                                or when the object in compare using == to astring or a sympol
+            */
+
+
+            
+        </script>
+    </body>
+</html>

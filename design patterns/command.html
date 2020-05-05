@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Observer</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+        crossorigin="anonymous">
+        <style>
+            .list-group-item{
+                display: flex;
+                align-items: center;
+            }
+            .list-group-item img{
+                width: 35px;
+                height: 35px;
+                flex-basis: 35px;
+                margin-right: 10px;
+                border-radius: 50%;
+                background: #dfdfdf;
+            }
+        </style>
+</head>
+
+<body>
+
+    <ul class="list-group" id="list">
+        
+    </ul>
+
+</body>
+<script>
+    function calculator(){
+        this.currentValue = 0
+        this.commands = []
+    }
+
+    calculator.prototype.excute = function(command){
+        this.currentValue = command.excute(this.currentValue)
+        this.commands.push(command)
+        console.log('commands', this.commands)
+    }
+
+    calculator.prototype.getCurrentValue = function(){
+        return this.currentValue 
+    }
+
+    calculator.prototype.undo = function(){
+        let cmd =  this.commands.pop();
+        console.log('poped', cmd)
+        this.currentValue = cmd.undo(this.currentValue)
+    }
+
+
+
+
+
+    function command(fn, undo,value){
+        this.excute = fn;
+        this.value = value
+        this.undo = undo
+
+        console.log('command', this)
+    }
+    function add(value){
+        return value + this.value
+    }
+    function sub(value){
+        return value - this.value
+    }
+    function addCommand(value){       
+        command.call(this, add, sub, value)
+    }
+    function subCommand(value){       
+        command.call(this, sub, add, value)
+    }
+
+
+
+    let calc = new calculator();
+
+    calc.excute(new addCommand(19))
+    calc.excute(new subCommand(7))
+    console.log(calc.getCurrentValue())
+
+</script>
+
+</html>

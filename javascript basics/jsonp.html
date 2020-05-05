@@ -1,0 +1,29 @@
+
+<html>
+    <head>
+        <title>jSONP</title>
+        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+        <meta charset="UTF-8">
+        
+    </head>
+    <body>
+        <ul id="preview">
+
+        </ul>
+        <script>
+            
+            const todo = ({id, title, completed}) => `<li id="id-${id}"><input checked=${completed} type="checkbox"/>${title}</li>`
+            const output = arr => arr.map(aTodo => todo(aTodo)).join('')
+            const render = (target,html) => target.innerHTML = html;
+            const print = data =>  render(document.getElementById('preview'),output(data) )
+           
+            const jsonpCaller = (url,func) =>{
+                const script = document.createElement('script');
+                script.src = `${url}?callback=${func}`;
+                document.body.appendChild(script)
+            }
+            
+            jsonpCaller(`https://jsonplaceholder.typicode.com/todos/1`,`print`)
+        </script>
+    </body>
+</html>

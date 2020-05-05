@@ -1,0 +1,71 @@
+
+<html>
+    <head>
+        <title>requestAnimationFrame </title>
+        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+        <meta charset="UTF-8">
+        <style>
+            html,body{
+                padding: 0;
+                margin: 0;
+            }
+            .playground{
+                background: green;
+                min-height: 100vh;
+                min-width: 100vw;
+                position: relative;
+               
+            }
+            .player{
+                width: 40px;
+                height: 40px;
+                background: yellow;
+                border-radius: 100%;
+                position: absolute;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                top: 20px;
+                left: 20px;
+                top:50%;
+                left: 50%;
+                transform:translate(-50%, -50%);
+
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+           <div class="playground">
+                <span class="player">10</span>
+           </div>
+        </div>
+       
+        <script>
+            "use strict";  
+            let player = document.querySelector('.player');
+            let playground = document.querySelector('.playground');
+            let start = null;
+            
+
+
+
+            function step(timestamp) {
+               
+                if (!start) start = timestamp;
+                var progress = timestamp - start;
+                player.style.left = Math.min(progress / 10, 200) + 'px';
+
+                player.style.top = Math.floor(Math.min((Math.random() * 10) + 45, 55)) + '%';
+                player.style.left = Math.floor(Math.min((Math.random() * 10) + 45, 55)) + '%';
+                console.log( start + 200 > timestamp)
+                if (start + 200 > timestamp ) {
+                    window.requestAnimationFrame(step);
+                    start =  timestamp
+                }
+            }
+
+            window.requestAnimationFrame(step);
+        </script>
+    </body>
+</html>

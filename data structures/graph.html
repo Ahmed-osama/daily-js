@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>graph</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+        crossorigin="anonymous">
+    <style>
+       .person{
+           display: flex;
+           flex-direction: column;
+           text-align: center;
+           width: 150px;
+       }
+       .person__name{
+           font-size: 24px;
+           background: blue;
+           color: white;
+       }
+       .person__connections{
+            display: flex;
+           flex-direction: column;
+        
+       }
+       .person__connections{
+           color: blue
+       }
+
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Graph</h1>
+    </div>
+
+    <ul id="view">
+
+    </ul>
+
+</body>
+<script>
+   class Graph{
+       constructor(){
+            this.nodes ={}
+       }
+       addNode(value){
+           if(value===undefined) return;
+           this.nodes[value] = this.nodes[value] || []
+           return this.nodes
+       }
+       addEdge(value1, value2){
+           
+           if(!this.nodes[value1] || !this.nodes[value2]) return
+           this.nodes[value1].push(value2)
+           this.nodes[value2].push(value1)
+
+            return this.nodes
+       }
+       removeNode(name){
+           this.nodes[name].forEach(connection => {
+                let neighbor = this.nodes[connection]
+                let index = neighbor.indexOf(name)
+                neighbor.splice(index,1)
+           });
+           delete this.nodes[name]
+           return this.nodes
+       }
+       removeEdge(name1, name2){
+          
+            let connection1 = this.nodes[name1]
+            let index1 = connection1.indexOf(name2)
+            connection1.splice(index1,1)
+
+            let connection2 = this.nodes[name2]
+            let index2 = connection2.indexOf(name1)
+            connection2.splice(index2,1)
+           
+           console.log(this.nodes)
+       }
+       hasEdge(name1, name2){
+           return this.nodes[name1].indexOf(name2) > -1
+       }
+       contains(name){
+           return this.nodes[name] !== undefined
+       }
+       forEach(fn){
+           for(node in this.nodes){
+               fn(node, this.nodes[node], this.nodes)
+           }
+       }
+       traverseDepthFirst(value, fn, visited={}, distance=0){
+           if(!this.nodes[value] && typeof fn !== 'function') return
+           fn(value, distance)
+           visited[value] = true
+           this.nodes[value].forEach(connection => {
+               if(visited[connection]) return
+               this.traverseDepthFirst(connection,  fn, visited, distance+1)
+           },this)
+       }
+       traverseBreadthFirst(value, fn) {
+            if (!this.nodes[value] || typeof fn !== 'function') return 'Invalid value or function';
+            var visited = {};
+            var queue = [value];
+            visited[value] = 0;
+            while (queue.length) {
+                var node = queue.shift();
+                fn(node, visited[node]);
+                var connections = this.nodes[node].filter(function(connection) {
+                if (visited[connection] === undefined) {
+                    visited[connection] = visited[node]+1;
+                    return true;
+                }
+                });
+                queue = queue.concat(connections);
+            }
+        }
+   }
+    function render(str, target){
+        document.getElementById(target).innerHTML+=container(str)
+    }
+    function container(child){
+        return `<hr/><div class="container">${child}</div>`
+    }
+
+    let myGraph = new Graph()
+
+    myGraph.addNode('ahmed')
+    myGraph.addNode('7amza')
+    myGraph.addNode('osama')
+    myGraph.addNode('yousef')
+    myGraph.addNode('adam')
+    myGraph.addNode('judy')
+    myGraph.addNode('renad')
+    myGraph.addNode('fofo')
+
+
+    console.log(myGraph.nodes)
+    myGraph.addEdge('adam', 'ahmed')
+    myGraph.addEdge('7amza', 'osama')
+    myGraph.addEdge('yousef', 'osama')
+    console.log(myGraph.nodes)
+    myGraph.addEdge('ahmed', '7amza')
+    myGraph.addEdge('ahmed', 'yousef')
+    myGraph.addEdge('ahmed', 'osama')
+    myGraph.addEdge('judy', 'adam')
+    myGraph.addEdge('judy', 'renad')
+    myGraph.addEdge('fofo', 'renad')
+    var traverseDF = [];
+    myGraph.traverseDepthFirst('ahmed', function(val, dist) { traverseDF.push([val, dist]) });
+    console.log('traverseDF', traverseDF)
+    
+    var traverseBF = [];
+    myGraph.traverseBreadthFirst('ahmed', function(val, dist) { traverseBF.push([val, dist]) });
+    console.log('traverseDF', traverseBF)
+
+    console.log(myGraph.nodes)
+    console.log(myGraph.contains('ahmed'))
+    //myGraph.removeNode('ahmed')
+    console.log(myGraph.contains('ahmed'))
+    console.log(myGraph.hasEdge('yousef', 'osama'))
+    myGraph.removeEdge('yousef', 'osama')
+    console.log(myGraph.hasEdge('yousef', 'osama'))
+ 
+</script>
+
+</html>
