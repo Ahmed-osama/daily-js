@@ -33,7 +33,9 @@ const Examples = () => {
     config: {
       mass: 10,
       tension: 500,
-      friction: 50
+      friction: 50,
+      clamp: true,
+      duration: 10000
     }
   }));
 
@@ -79,12 +81,14 @@ const Examples = () => {
             <label htmlFor="scale_input">scale</label>
           </Row>
         </Controls>
+
+        {/* BOXES */}
         <Content>
           <Box style={{ opacity: animation.opacity.interpolate(x => x) }}>
             opacity
           </Box>
           <Box style={{ width: animation.number.interpolate(x => `${x}px`) }}>
-            width
+            {animation.number.interpolate(x => `${x.toFixed(0)}`)}
           </Box>
           <Box
             style={{
