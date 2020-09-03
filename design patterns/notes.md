@@ -152,3 +152,7 @@ function autoFactory(model, type) {
   }
 }
 ```
+
+---
+
+## structural design patterns
