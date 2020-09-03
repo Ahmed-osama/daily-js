@@ -1,4 +1,3 @@
-
 module.exports = {
   name: 'generate',
   alias: ['g'],
@@ -6,11 +5,17 @@ module.exports = {
     const {
       parameters,
       template: { generate },
-      print: { info }
+      print: { info },
+      prompt
     } = toolbox
 
-    const name = parameters.first
+    const { name } = await prompt.ask({
+      type: 'input',
+      name: 'name',
+      message: 'file name ?'
+    })
 
+    console.log(`->`, name)
     await generate({
       template: 'model.js.ejs',
       target: `models/${name}-model.js`,
