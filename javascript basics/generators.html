@@ -20,19 +20,39 @@
       // const gen = myGenerator();
       // gen.next();
 
-      const data = {
-        [Symbol.iterator]: function* () {
-          yield fetch(
-            "https://5f3ed66c13a9640016a69219.mockapi.io/api/meals"
-          ).then((res) => res.json());
-          yield fetch(
-            "https://5f3ed66c13a9640016a69219.mockapi.io/api/brands"
-          ).then((res) => res.json());
-        },
-      };
-      const datalist = [];
-      const cleanData = [...data].map((response) => {
-        response.then((o) => datalist.push(o));
+      // const data = {
+      //   [Symbol.iterator]: function* () {
+      //     yield fetch(
+      //       "https://5f3ed66c13a9640016a69219.mockapi.io/api/meals"
+      //     ).then((res) => res.json());
+      //     yield fetch(
+      //       "https://5f3ed66c13a9640016a69219.mockapi.io/api/brands"
+      //     ).then((res) => res.json());
+      //   },
+      // };
+
+      // const datalist = [];
+      // const cleanData = [...data].map((response) => {
+      //   response.then((o) => datalist.push(o));
+      // });
+      // for (let value of data) {
+      //   setTimeout(() => value.then(console.log), 5000);
+      // }
+
+      const dataGen = (async function* getDAta() {
+        yield await fetch(
+          "https://5f3ed66c13a9640016a69219.mockapi.io/api/meals"
+        )
+          .then((o) => o.json())
+          .then((o) => o);
+        yield await fetch(
+          "https://5f3ed66c13a9640016a69219.mockapi.io/api/brands"
+        )
+          .then((o) => o.json())
+          .then((o) => o);
+      })();
+      document.addEventListener("click", () => {
+        dataGen.next().then(({ value }) => console.log(value));
       });
     </script>
   </body>
