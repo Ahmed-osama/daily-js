@@ -1,0 +1,16 @@
+.container {
+  max-width: 800px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.container > div {
+  flex-basis: 50%;
+  max-width: 50%;
+}
+
+.search {
+  min-height: 200px;
+  align-items: center;
+}
