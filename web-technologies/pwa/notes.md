@@ -20,3 +20,13 @@ navigator.storage.estimate().then((storage) => {
 safari limit is 50mb
 safari will delete data and SW after 2 weeks of non activity
 ```
+
+---
+
+```js
+navigator.storage.persist().then((granted) => {
+  console.log({
+    granted,
+  });
+});
+```

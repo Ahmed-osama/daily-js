@@ -4,11 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SW</title>
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./assets/style.css" />
+    <script src="./assets/main.js" defer></script>
   </head>
   <body>
-    <h1>service worker playground</h1>
-    <output> </output>
+    <div class="container">
+      <img src="/assets/1_oOcY2Gn-LVt1h-e9xOv5oA.jpeg" alt="service worker" />
+      <h1>service worker playground</h1>
+      <pre id="displayResponse">loading...</pre>
+    </div>
 
     <script>
       if ("serviceWorker" in navigator) {
@@ -22,23 +26,6 @@
           .catch((err) => {
             console.log("service worker failed to register");
           });
-
-        // navigator.storage.estimate().then((storage) => {
-        //   console.log({
-        //     quota: storage.quota,
-        //     usage: storage.usage,
-        //   });
-        // });
-        navigator.storage.persist().then((granted) => {
-          console.log({
-            granted,
-          });
-        });
-        // navigator.serviceWorker.getRegistrations().then((registrations) => {
-        //   registrations.forEach((registration) => {
-        //     registration.unregister();
-        //   });
-        // });
       }
     </script>
   </body>
