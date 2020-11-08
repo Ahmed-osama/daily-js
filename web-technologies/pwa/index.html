@@ -23,6 +23,17 @@
             console.log("service worker failed to register");
           });
 
+        // navigator.storage.estimate().then((storage) => {
+        //   console.log({
+        //     quota: storage.quota,
+        //     usage: storage.usage,
+        //   });
+        // });
+        navigator.storage.persist().then((granted) => {
+          console.log({
+            granted,
+          });
+        });
         // navigator.serviceWorker.getRegistrations().then((registrations) => {
         //   registrations.forEach((registration) => {
         //     registration.unregister();
