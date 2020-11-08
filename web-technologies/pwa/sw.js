@@ -1,6 +1,14 @@
-console.log("hello from SW");
-try {
-  importScripts("events.js"); // this sync api, you can pas multiple files downloads in parallel and executes in order
-} catch (err) {}
+const preCacheList = [
+  "/",
+  "/assets",
+  "/assets/1_oOcY2Gn-LVt1h-e9xOv5oA.jpeg",
+  "/assets/main.js",
+];
 
-self.addEventListener("fetch", (event) => {});
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open("appShell-v1.0.0").then((cache) => {
+      cache.addAll(preCacheList);
+    })
+  );
+});

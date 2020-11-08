@@ -1,0 +1,22 @@
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background: beige;
+}
+
+img {
+  max-width: 600px;
+  margin: 0 auto 20px auto;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+}
+
+pre {
+  text-align: left;
+  background-color: #dfdfdf;
+  color: #333;
+  padding: 10px;
+}
