@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Elect app</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <h1 id="name">-/-</h1>
+        </div>
+        <form action=""></form>
+      </div>
+    </div>
+    <script>
+      window.web3 = web3
+        ? new Web3(web3.currentProvider)
+        : new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
+
+      web3.eth.defaultAccount = web3.eth.accounts[0];
+      const contractAbi = [
+        {
+          constant: true,
+          inputs: [],
+          name: "candidateName",
+          outputs: [
+            {
+              name: "",
+              type: "string",
+            },
+          ],
+          payable: false,
+          type: "function",
+          stateMutability: "view",
+        },
+        {
+          constant: false,
+          inputs: [],
+          name: "Elect",
+          outputs: [],
+          payable: false,
+          type: "function",
+          stateMutability: "nonpayable",
+        },
+        {
+          constant: false,
+          inputs: [
+            {
+              name: "_name",
+              type: "string",
+            },
+          ],
+          name: "setCandidate",
+          outputs: [],
+          payable: false,
+          type: "function",
+          stateMutability: "nonpayable",
+        },
+      ];
+      const contractAddress = "0xd9145CCE52D386f254917e481eB44e9943F39138";
+      const electionContract = new web3.eth.Contract(
+        contractAbi,
+        contractAddress
+      );
+
+      const x = electionContract.methods.candidateName();
+    </script>
+  </body>
+</html>
