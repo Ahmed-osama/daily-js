@@ -1,0 +1,7 @@
+{
+    "compilerOptions": {
+        "strictNullChecks": false,
+        "outDir": "./lib"
+      },
+      "include": ["src/*"]
+}
