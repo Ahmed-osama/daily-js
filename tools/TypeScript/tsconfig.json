@@ -1,7 +1,8 @@
 {
     "compilerOptions": {
         "strictNullChecks": false,
-        "outDir": "./lib"
+        "outDir": "./lib ",
+        "declaration": true
       },
       "include": ["src/*"]
 }
