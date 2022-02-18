@@ -3,7 +3,7 @@
     "start": "node scrapper.js"
   },
   "dependencies": {
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "puppeteer": "^5.2.1"
   }
 }
