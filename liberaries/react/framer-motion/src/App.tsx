@@ -1,10 +1,10 @@
 import "./App.css";
 
+import { AnimatePresence, motion } from "framer-motion";
 import styled, { createGlobalStyle } from "styled-components";
+import { useCallback, useState } from "react";
 
 import logo from "./logo.svg";
-import { motion } from "framer-motion";
-import { useState } from "react";
 
 const GlobalStyle = createGlobalStyle`
   body , html{
@@ -75,11 +75,21 @@ const CustomVariants = {
       duration: 0.3,
     },
   },
+  onUnMount: {
+    opacity: 0,
+    x: -300,
+  },
 };
 
 function App() {
   const [isActive, setIsActive] = useState(false);
-
+  const [list, setList] = useState(["Hamza", "Ahmed", "Osama", "khalil"]);
+  const filterList = useCallback(
+    (item) => {
+      setList(list.filter((i) => i !== item));
+    },
+    [list]
+  );
   return (
     <>
       <GlobalStyle />
@@ -116,17 +126,19 @@ function App() {
         )}
 
         <List variants={CustomVariants} initial="hidden" animate="visible">
-          {["Hamza", "Ahmed", "Osama", "khalil"].map((name, index) => (
-            <motion.li
-              key={name}
-              variants={CustomVariants}
-              // initial="hidden"
-              // animate="visible"
-              whileHover={"hover"}
-            >
-              {name}
-            </motion.li>
-          ))}
+          <AnimatePresence>
+            {list.map((name, index) => (
+              <motion.li
+                key={name}
+                variants={CustomVariants}
+                whileHover={"hover"}
+                onClick={() => filterList(name)}
+                exit={"onUnMount"}
+              >
+                {name}
+              </motion.li>
+            ))}
+          </AnimatePresence>
         </List>
       </AppWrapper>
     </>
