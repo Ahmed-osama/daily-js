@@ -18,7 +18,7 @@ const AppWrapper = styled(motion.main)`
   position: relative;
 `;
 const Ball = styled(motion.main)`
-  background: white;
+  background: yellowgreen;
   height: 5vw;
   width: 5vw;
   position: absolute;
@@ -38,17 +38,44 @@ const List = styled(motion.ol)`
   left: 0;
   height: 100vh;
   width: 20vw;
+  min-width: 20vw;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   border-right: 4px solid yellowgreen;
   color: yellowgreen;
+
   li {
     cursor: pointer;
     font-size: xx-large;
+    list-style-type: none;
+    padding: 20px;
   }
 `;
+
+const CustomVariants = {
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+    transition: {
+      type: "spring",
+      when: "beforeChildren",
+      staggerChildren: 0.3,
+    },
+  },
+  hover: {
+    scale: [1.1, 0.9],
+    color: "yellow",
+    textShadow: "0px 0px 10px yellowgreen",
+    transition: {
+      yoyo: Infinity,
+      duration: 0.3,
+    },
+  },
+};
 
 function App() {
   const [isActive, setIsActive] = useState(false);
@@ -79,6 +106,7 @@ function App() {
             transition={{
               delay: 0.5,
               duration: 0.5,
+              stiffness: 150,
             }}
             animate={{
               x: 0,
@@ -87,19 +115,14 @@ function App() {
           />
         )}
 
-        <List>
-          {["Hamza", "Ahmed", "Osama", "khalil"].map((name) => (
+        <List variants={CustomVariants} initial="hidden" animate="visible">
+          {["Hamza", "Ahmed", "Osama", "khalil"].map((name, index) => (
             <motion.li
               key={name}
-              initial={{
-                listStyleType: "none",
-                padding: 20,
-              }}
-              whileHover={{
-                color: "yellowgreen",
-                scale: 1.5,
-                textShadow: "0px 0px 10px yellowgreen",
-              }}
+              variants={CustomVariants}
+              // initial="hidden"
+              // animate="visible"
+              whileHover={"hover"}
             >
               {name}
             </motion.li>
